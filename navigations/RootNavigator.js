@@ -3,6 +3,8 @@ import {createStackNavigator, createBottomTabNavigator, createAppContainer} from
 import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector-icons'
 import BlankPage from '../screens/Blank'
 
+import Timbangan from './TimbanganNav'
+
 const  DashboardNav= createStackNavigator({
   Dashboard: BlankPage
 }, {
@@ -11,7 +13,7 @@ const  DashboardNav= createStackNavigator({
 
 const  MainNavigator = createBottomTabNavigator({
   Home: DashboardNav,
-  Measure: BlankPage,
+  Measure: Timbangan,
   Profile: BlankPage,
 }, {
   initialRouteName: 'Home',
