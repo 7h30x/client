@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import RootNav from './navigations/RootNavigator'
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text> App</Text>
-      </View>
+      <RootNav/>
     );
   }
 }
