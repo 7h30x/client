@@ -1,28 +1,42 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, AsyncStorage } from 'react-native';
+import { AnimatedCircularProgress } from 'react-native-circular-progress'
+import { StyleSheet, Text, View, Image, TouchableHighlight, AsyncStorage } from 'react-native';
 import { Button } from 'native-base'
+
 import firebase from '../../firebase/config'
 
 export default class App extends React.Component {
   componentDidMount = async () => {
     let self = this
     let timbangan = await AsyncStorage.getItem('timbangan')
-    console.log(timbangan)
-    firebase.collection("Timbangans").doc(timbangan)
-      .onSnapshot(function (doc) {
-        console.log("Current data: ", doc.data());
-        self.setState({
-          timbanganValue: doc.data().value
-        })
-      });
+    this.setState({
+      timbangan: timbangan
+    })
+    firebase.database().ref(`Timbangans/${timbangan}`).on('value', (snapshot) => {
+      self.setState({
+        timbanganValue: snapshot.val().value
+      })
+    })
   }
   state = {
-    timbanganValue: 0
+    timbanganValue: 0,
+    loading: false,
+    timbangan: '',
+    maxPoints: 150
+  }
+
+  onDisconect = async () => {
+    await firebase.database().ref(`Timbangans/${this.state.timbangan}`).set({
+      currentUser: '',
+      value: 0
+    })
+    await AsyncStorage.removeItem('timbangan')
+    this.props.navigation.navigate('InputTimbangan')
   }
 
   saveValue = async () => {
     let timbangan = await AsyncStorage.getItem('timbangan')
-    await firebase.collection('Timbangans').doc(timbangan).set({
+    await firebase.database().ref(`Timbangans/${timbangan}`).set({
       currentUser: '',
       value: 0
     })
@@ -31,10 +45,56 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { timbanganValue } = this.state
+    const { timbanganValue, maxPoints } = this.state
+    const fill = timbanganValue / maxPoints * 100
     return (
       <View style={styles.container}>
-        <Image
+        <View style={styles.headerContainer}>
+          <TouchableHighlight
+            onPress={this.onDisconect}
+            style={{ width: '100%' }}
+          >
+            <View style={styles.TouchContainer}>
+              <Text style={{ fontWeight: 'bold', color: 'white' }}>
+                Connected on: WKWK
+                </Text>
+              <Text>
+                Tap to disconect
+                </Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+
+        <View style={styles.ButtonContainer}>
+          <View>
+            <Button style={styles.ButtonStyle} rounded onPress={this.saveValue}>
+              <Text style={{ fontWeight: 'bold' }}>Save</Text>
+            </Button>
+          </View>
+        </View>
+
+        <View style={styles.GraphContainer}>
+
+          <AnimatedCircularProgress
+            size={300}
+            width={15}
+            backgroundWidth={5}
+            fill={fill}
+            tintColor="#00e0ff"
+            backgroundColor="#3d5875"
+            arcSweepAngle={240}
+            rotation={240}
+            lineCap="round"
+          >
+            {(fill) => (
+              <Text style={styles.points}>
+                {Math.round(maxPoints * fill / 100)}Kg
+            </Text>
+            )}
+          </AnimatedCircularProgress>
+        </View>
+
+        {/* <Image
           source={require('../../assets/timbangan.png')}
           style={{
             zIndex: -10,
@@ -53,33 +113,94 @@ export default class App extends React.Component {
 
 
         <View style={{ flex: 1, height: '100%', width: '100%' }}>
-          <View style={{ flex: 5, heigh: '100%', }}>
+          <View style={{ flex: 2, heigh: '100%', flexDirection: 'row' }}>
+            <TouchableHighlight
+              onPress={this.onDisconect}
+              style={{ width: '100%' }}
+            >
+              <View style={{ backgroundColor: '#3b91e2', justifyContent: 'center', alignItems: 'center', width: '100%', height: 50 }}>
+                <Text style={{ fontWeight: 'bold', color: 'white' }}>
+                  Connected on: WKWK
+                </Text>
+                <Text>
+                  Tap to disconect
+                </Text>
+              </View>
+            </TouchableHighlight>
+          </View>
+
+          <View style={{ flex: 1, heigh: '100%', justifyContent: 'center', alignItems: 'center' }}>
 
           </View>
-          <View style={{ flex: 1, justifyContent: 'center', height: '100%', margin: 10 }}>
-            <Button block onPress={this.saveValue}>
-              <Text>Primary</Text>
-            </Button>
+          <View style={{ flex: 1, height: '100%', width: '100%', alignItems: 'center' }}>
+            <View>
+              <Button style={{ width: 100, justifyContent: 'center', backgroundColor: 'wheat' }} rounded onPress={this.saveValue}>
+                <Text style={{ fontWeight: 'bold' }}>Save</Text>
+              </Button>
+            </View>
           </View>
-        </View>
+        </View> */}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: '#fff',
+  //   alignItems: 'center',
+  //   justifyContent:'center'
+  // },
+  // value: {
+  //   alignItems: 'center',
+  //   color: 'red',
+  //   position: 'absolute',
+  //   top: 210,
+  //   fontWeight: 'bold',
+  //   fontSize: 50
+  // },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
-  value: {
-    alignItems: 'center',
-    color: 'red',
+  points: {
+    backgroundColor: 'transparent',
     position: 'absolute',
-    top: 210,
-    fontWeight: 'bold',
-    fontSize: 50
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#7591af',
+    fontSize: 40,
+    fontWeight: "bold"
+  },
+  headerContainer: {
+    flex: 1,
+    width: '100%'
+  },
+  TouchContainer: {
+    backgroundColor: '#3b91e2',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 50
+  },
+  ButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  ButtonStyle: {
+    width: 100,
+    justifyContent: 'center',
+    backgroundColor: 'wheat'
+  },
+  GraphContainer: {
+    zIndex: -1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
