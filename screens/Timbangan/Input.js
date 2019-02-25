@@ -6,6 +6,7 @@ import { Form, Item, Input, Label, Icon, Button, Toast } from 'native-base';
 import { Query, Mutation } from 'react-apollo'
 import gpt from 'graphql-tag'
 
+import Camera from './Camera'
 import Loading from './Loading'
 import History from './History'
 
@@ -30,6 +31,7 @@ export default class App extends React.Component {
     loading: false,
     showToast: false,
     history: false,
+    ModalCam: false
   }
   toggleHistory = () => {
     this.setState({
@@ -119,6 +121,20 @@ export default class App extends React.Component {
     })
   }
 
+  toggleCamera = () => {
+    this.setState({
+      ModalCam: !this.state.ModalCam
+    })
+  }
+
+  getQr = (value) => {
+    const qrVal = value + ''
+    this.setState({
+      timbanganID: qrVal,
+      ModalCam: false
+    })
+  }
+
   render() {
     const { user } = this.state
     const getData = gpt`{
@@ -140,7 +156,7 @@ export default class App extends React.Component {
               let TimbanganNow = data.getData.data
               return (
                 <View style={styles.container}>
-                  {this.state.loading && <Loading />}
+                  {this.state.loading && <Loading timbangan={true} timbName={this.state.timbanganID} />}
 
                   <Modal
                     animationType='slide'
@@ -150,6 +166,16 @@ export default class App extends React.Component {
                       history={data.getData}
                       val={this.changeHistory}
                       modal={this.toggleHistory} />
+                  </Modal>
+
+                  <Modal
+                    visible={this.state.ModalCam}
+                  >
+                    <Camera
+                      qrFunct={this.getQr}
+                      toggleCam={this.toggleCamera}
+                    />
+
                   </Modal>
 
                   <Form style={{ width: '100%', }}>
@@ -165,6 +191,19 @@ export default class App extends React.Component {
                         <Icon
                           name="time"
                         />
+                        <Text style={{ marginRight: 10, color: 'white', fontWeight: 'bold' }}>
+                          History
+                        </Text>
+                      </Button>
+                    </View>
+                    <View style={{ marginLeft: 5 }}>
+                      <Button onPress={this.toggleCamera} rounded success>
+                        <Icon
+                          name="camera"
+                        />
+                        <Text style={{ marginRight: 10, color: 'white', fontWeight: 'bold' }}>
+                          Scan QR
+                        </Text>
                       </Button>
                     </View>
                   </View>
@@ -215,6 +254,7 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     alignItems: 'baseline',
+    flexDirection: 'row',
     marginTop: 10,
     marginBottom: 5,
     width: '100%'
@@ -225,6 +265,7 @@ const styles = StyleSheet.create({
   },
   ButtonText: {
     margin: 5,
+    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center'
   }

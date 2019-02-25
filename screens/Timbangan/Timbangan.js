@@ -80,9 +80,9 @@ export default class App extends React.Component {
           >
             <View style={styles.TouchContainer}>
               <Text style={{ fontWeight: 'bold', color: 'white' }}>
-                Connected on: WKWK
+                Connected on: {this.state.timbangan}
                 </Text>
-              <Text>
+              <Text style={{ fontWeight: 'bold', color: 'white' }}>
                 Tap to disconect
                 </Text>
             </View>

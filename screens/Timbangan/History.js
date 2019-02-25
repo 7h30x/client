@@ -26,14 +26,16 @@ export default class History extends Component {
           this.state.loading && <Loading />
         }
         {
-          data.map((val, index) => {
-            return <ListTimbangan
-              loadingToggle={this.toggleLoading}
-              timbangan={val}
-              key={index}
-              onAction={this.props.val}
-            />
-          })
+          data.length == 0
+            ? <Text>You dont have history yet</Text>
+            : data.map((val, index) => {
+              return <ListTimbangan
+                loadingToggle={this.toggleLoading}
+                timbangan={val}
+                key={index}
+                onAction={this.props.val}
+              />
+            })
         }
         <View style={{ position: 'absolute', width: '100%', height: '100%', zIndex: -1, alignItems: 'flex-end' }}>
           <View style={{ margin: 30, }}>
