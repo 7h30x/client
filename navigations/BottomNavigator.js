@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation'
 import DashboardNav from './DashboardNav'
-import Profile from '../screens/ProfileNav'
+import Profile from './ProfileNav'
 import Timbangan from './TimbanganNav'
 import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector-icons'
 
