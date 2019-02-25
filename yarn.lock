@@ -5213,6 +5213,7 @@ react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-native-progress@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.5.0.tgz#d1ccc7f96dc17c609aedb43b2e6695d67deae0ec"
@@ -5220,6 +5221,8 @@ react-native-progress@^3.5.0:
   dependencies:
     prop-types "^15.5.8"
 =======
+=======
+>>>>>>> profile page v1
 react-native-ratings@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.3.0.tgz#becda9379616776a81d9d90bfc95ea40b76286fb"
@@ -5227,6 +5230,9 @@ react-native-ratings@^6.3.0:
   dependencies:
     lodash "^4.17.4"
     prop-types "^15.5.10"
+<<<<<<< HEAD
+>>>>>>> profile page v1
+=======
 >>>>>>> profile page v1
 
 react-native-reanimated@1.0.0-alpha.11:
