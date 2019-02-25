@@ -4,14 +4,17 @@ import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector
 import BlankPage from '../screens/Blank'
 import Timbangan from './TimbanganNav'
 import StatsPage from '../screens/StatsPage'
+
 const  DashboardNav= createStackNavigator({
   Dashboard: BlankPage
 }, {
   initialRouteName: 'Dashboard'
 })
+
 const ProfileNav = createStackNavigator({
   Stats: StatsPage
 })
+
 const  MainNavigator = createBottomTabNavigator({
   Home: DashboardNav,
   Profile: ProfileNav,
