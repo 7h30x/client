@@ -1,12 +1,12 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator, createAppContainer} from 'react-navigation';
+import {createStackNavigator, createBottomTabNavigator, createSwitchNavigator, createAppContainer} from 'react-navigation';
 import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector-icons'
 import BlankPage from '../screens/Blank'
 import Timbangan from './TimbanganNav'
 import StatsPage from '../screens/StatsPage'
 
 const  DashboardNav= createStackNavigator({
-  Dashboard: BlankPage
+  Dashboard: DashboardPage
 }, {
   initialRouteName: 'Dashboard'
 })
@@ -49,5 +49,15 @@ const  MainNavigator = createBottomTabNavigator({
   })
 })
 
-export default createAppContainer(MainNavigator);
+const AppNav = createSwitchNavigator({
+  Main: MainNavigator,
+  Login: LoginPage,
+  AuthLoad: AuthLoad,
+  Register: RegisterPage
+},
+{
+  initialRouteName: 'Main'
+})
+
+export default createAppContainer(AppNav);
 

@@ -4,9 +4,11 @@ import { ApolloProvider } from 'react-apollo'
 import { client } from './graphql/config'
 import { Root } from 'native-base'
 import RootNav from './navigations/RootNavigator'
-import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost'
-const client = new ApolloClient({ uri: 'https://timol-server.hafrizresa.pro/graphql' })
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
+const client = new ApolloClient({
+  uri: "https://timbangan-graphql-express-7vmqu7pyg.now.sh/graphql"
+});
 
 export default class App extends React.Component {
   render() {
@@ -15,7 +17,6 @@ export default class App extends React.Component {
         <Root>
           <RootNav />
         </Root>
-        <RootNav/>
       </ApolloProvider>
     );
   }
