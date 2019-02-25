@@ -12,17 +12,10 @@ export default class App extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>
-<<<<<<< HEAD
-<<<<<<< HEAD
         <Root>
           <RootNav />
         </Root>
-=======
         <RootNav/>
->>>>>>> profile page v1
-=======
-        <RootNav/>
->>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
       </ApolloProvider>
     );
   }
