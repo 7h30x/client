@@ -1,4 +1,4 @@
-
+import React from 'react';
 import {createSwitchNavigator} from 'react-navigation'
 import Input from '../screens/Timbangan/Input'
 import Timbangan from '../screens/Timbangan/Timbangan'

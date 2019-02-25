@@ -24,10 +24,25 @@ export default class LoginForm extends Component {
     }
 
     onLoginButtonPress = async (Login) => {
+        const {navigate} = this.props.navigation
+        // console.log(this.props)
+        // console.log(Login)
         const {email, password} = this.state
-        console.log(input,"input")
-        console.log(Login)
-        const data = await Login({variables: {email, password}})
+        console.log(email,"input")
+        Login({variables: {email, password}})
+        .then( async (data) => {
+            console.log(data.data.login.token, "data")
+            try {
+                const value = await AsyncStorage.setItem('user', data.data.login.token );
+                console.log(await AsyncStorage.getItem('user'), "ini localstorage")
+                navigate('AuthLoad')
+              } catch (error) {
+                // Error retrieving data
+              }
+        })
+        .catch((err) => {
+            console.log(err,"errror")
+        })
         console.log(data,"=====")
     };
     render() {

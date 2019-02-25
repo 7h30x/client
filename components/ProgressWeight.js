@@ -27,7 +27,7 @@ export default class ProgressWeight extends Component {
                 backgroundWidth={5}
                 fill={fill}
                 ref="circularprogress"
-                tintColor="#00e0ff"
+                tintColor="#0f8bc4"
                 backgroundColor="#3d5875"
                 arcSweepAngle={240}
                 rotation={240}

@@ -34,7 +34,7 @@ export default class Login extends Component {
                 <Image resizeMode="contain" style={styles.logo} source={{uri: 'https://cdn2.iconfinder.com/data/icons/new-year-resolutions/64/resolutions-01-512.png'}} />
             </View>
             <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
-                <LoginForm />
+                <LoginForm navigation={this.props.navigation}/>
             </KeyboardAvoidingView>
             <TouchableHighlight style={styles.textContainer}
                 onPress={() => navigate('Register')}
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
       flex: 1,
+      height: 30,
       justifyContent: 'flex-start',
       alignItems: 'flex-start'
     },

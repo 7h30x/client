@@ -1,62 +1,18 @@
 import React from 'react';
-import {createStackNavigator, createBottomTabNavigator, createSwitchNavigator, createAppContainer} from 'react-navigation';
-import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector-icons'
-import BlankPage from '../screens/Blank'
-import Timbangan from './TimbanganNav'
-import StatsPage from '../screens/StatsPage'
-
-const  DashboardNav= createStackNavigator({
-  Dashboard: DashboardPage
-}, {
-  initialRouteName: 'Dashboard'
-})
-
-const ProfileNav = createStackNavigator({
-  Stats: StatsPage
-})
-
-const  MainNavigator = createBottomTabNavigator({
-  Home: DashboardNav,
-  Profile: ProfileNav,
-  Measure: Timbangan
-}, {
-  initialRouteName: 'Profile',
-  tabBarOptions: {
-    activeTintColor: '#2e94b5',
-    showLabel: false,
-    style: {
-      fontHeight: 'bold',
-      backgroundColor: '#fff',
-    },
-  },
-  defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
-      const { routeName } = navigation.state;
-      let iconName;
-      var IconComponent
-      if (routeName === 'Home') {
-        IconComponent = FontAwesome;
-        iconName = `home`
-      } else if (routeName === 'Measure') {
-        IconComponent = MaterialCommunityIcons;
-        iconName = `scale-bathroom`
-      } else if (routeName === 'Profile') {
-        var IconComponent = Ionicons;
-        iconName = 'ios-contact'
-      }
-      return <IconComponent name={iconName} size={25} color={tintColor} />
-    },
-  })
-})
+import {createSwitchNavigator, createAppContainer} from 'react-navigation';
+import MainNavigator from './BottomNavigator'
+import LoginPage from '../screens/Login'
+import RegisterPage from '../screens/Register'
+import AuthLoad from '../screens/AuthLoading'
 
 const AppNav = createSwitchNavigator({
+  AuthLoad: AuthLoad,
   Main: MainNavigator,
   Login: LoginPage,
-  AuthLoad: AuthLoad,
   Register: RegisterPage
 },
 {
-  initialRouteName: 'Main'
+  initialRouteName: 'AuthLoad'
 })
 
 export default createAppContainer(AppNav);

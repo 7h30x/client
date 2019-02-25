@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
       },
       formContainer:{
-        flex: 1,
+        flex: 2,
         width: 300,
         justifyContent: 'center'
       },
