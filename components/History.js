@@ -34,12 +34,13 @@ export default class History extends Component {
         const {loading} = this.state
         
         return (
-            <Container>
-                {
-                    loading &&
-                    <Loading/>
-                }
+        //     <Container>
+        //         
                 <Content>
+                    {
+                        loading &&
+                        <Loading/>
+                    }
                     <Card>
                         <CardItem header bordered>
                             <Left>
@@ -62,7 +63,7 @@ export default class History extends Component {
                                 return (
                                     <CardItem bordered>
                                         <Left>
-                                            <Text>{moment(history.createdAt).format("DD-MM-YYYY")}</Text>
+                                            <Text>{history.createdAt}</Text>
                                             <Text style={{marginLeft: 50}}>{history.value} KG</Text>
                                         </Left>
                                         <Right>
@@ -81,9 +82,11 @@ export default class History extends Component {
                         }
                     </Card>
                 </Content>
-            </Container>
+            // </Container>
         )
     }
+    // {moment(history.createdAt).format("DD-MM-YYYY")}
+
 
     onPressDeleteData = async (mutation, id) => {
         const dataId = id

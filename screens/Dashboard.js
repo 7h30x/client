@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, AsyncStorage, StyleSheet, ActivityIndicator, ScrollView} from 'react-native'
 import {Card, CardItem } from 'native-base';
-import {ButtonGroup} from 'react-native-elements'
 import { Query, Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -18,10 +17,8 @@ export default class Dashboard extends Component {
     super()
     this.state = {
       currentToken: '',
-      selectedIndex: 0,
       loading: false
     }
-    this.updateIndex = this.updateIndex.bind(this)
   }
 
   componentWillMount = async() => {
@@ -39,13 +36,8 @@ export default class Dashboard extends Component {
 
   }
 
-  updateIndex (selectedIndex) {
-    this.setState({selectedIndex})
-  }
-
-  render() {
-    const buttons = ['All', 'Weekly', 'Monthly']
-    const { selectedIndex, currentToken} = this.state
+  render() {  
+    const { currentToken} = this.state
     const DATA_QUERY = gql`
     {
       getData(token: "${currentToken}"){
@@ -69,18 +61,8 @@ export default class Dashboard extends Component {
                     <CardItem header bordered>
                       <Text style={{color: '#0f8bc4', fontWeight: 'bold'}}> Your Weight Progress</Text>
                     </CardItem>
-                    <CardItem cardBody style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-                        <ButtonGroup
-                          onPress={this.updateIndex}
-                          selectedIndex={selectedIndex}
-                          buttons={buttons}
-                          containerStyle={{height: 30, width: 200}}
-                        />
-                    </CardItem>
                     <CardItem cardBody>
-                      <View style={styles.grafik}>
-                        <ChartKit/>
-                      </View>
+                      <ChartKit weights={JSON.parse(data.getData.data)}/>
                     </CardItem>
                   </Card>
                   <Card>
@@ -109,7 +91,8 @@ const styles = StyleSheet.create({
       flex: 1
     },
     grafik: {
-
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
     },
     progress:{
       marginTop: 20,
