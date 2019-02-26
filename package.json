@@ -17,6 +17,7 @@
     "react-apollo": "^2.4.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-card-flip": "^1.0.4",
+    "react-native-easy-toast": "^1.2.0",
     "react-native-loading-spinner-overlay": "^1.0.1",
     "react-navigation": "^3.3.0",
     "svg-path-properties": "^0.4.8"
