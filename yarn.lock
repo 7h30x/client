@@ -1992,6 +1992,7 @@ color@^2.0.1:
     color-string "^1.5.2"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 color@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/color/-/color-1.0.3.tgz#e48e832d85f14ef694fb468811c2d5cfe729b55d"
@@ -2005,6 +2006,8 @@ colour@~0.7.1:
   resolved "https://registry.yarnpkg.com/colour/-/colour-0.7.1.tgz#9cb169917ec5d12c0736d3e8685746df1cadf778"
   integrity sha1-nLFpkX7F0SwHNtPoaFdG3xyt93g=
 =======
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 color@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/color/-/color-3.1.0.tgz#d8e9fb096732875774c84bf922815df0308d0ffc"
@@ -2012,7 +2015,10 @@ color@^3.1.0:
   dependencies:
     color-convert "^1.9.1"
     color-string "^1.5.2"
+<<<<<<< HEAD
 >>>>>>> profile page v1
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 
 commander@^2.9.0:
   version "2.19.0"
@@ -3326,10 +3332,14 @@ hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.0.1:
 =======
 hoist-non-react-statics@^3.0.1, hoist-non-react-statics@^3.1.0:
 >>>>>>> profile page v1
+=======
+hoist-non-react-statics@^3.0.1, hoist-non-react-statics@^3.1.0:
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
   integrity sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
@@ -5096,6 +5106,7 @@ rc@^1.2.7:
     strip-json-comments "~2.0.1"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-apollo@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.4.1.tgz#89db63ebacf01c1603553bb476f089492aaeab2c"
@@ -5107,13 +5118,18 @@ react-apollo@^2.4.1:
     lodash.flowright "^3.5.0"
     lodash.isequal "^4.5.0"
 =======
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 react-card-flip@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-card-flip/-/react-card-flip-0.4.0.tgz#cfba93aa07880b20304716f966f6ad42eb7a4f9b"
   integrity sha512-BKnDJyGUVM3boq7n2wIWXp+hID2b8IOKqprqoELyHOTKkWT1b6pnSqb8Q744Y7nlfA+QIxF2itY0oOPma2XShg==
   dependencies:
     classnames "^2.2.0"
+<<<<<<< HEAD
 >>>>>>> profile page v1
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
     prop-types "^15.6.0"
 
 react-clone-referenced-element@^1.0.1:
@@ -5150,6 +5166,7 @@ react-native-branch@2.2.5:
   integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-native-circular-progress@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-circular-progress/-/react-native-circular-progress-1.1.0.tgz#5cb3efe570796226c59bf15a35250fb8b0d45025"
@@ -5172,6 +5189,8 @@ react-native-easy-grid@0.2.1:
   dependencies:
     lodash "4.17.11"
 =======
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 react-native-elements@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.1.0.tgz#f99bcda4459a886f3ab4591c684c099d37aedf2b"
@@ -5184,7 +5203,10 @@ react-native-elements@^1.0.0:
     prop-types "^15.5.8"
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
+<<<<<<< HEAD
 >>>>>>> profile page v1
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 
 react-native-gesture-handler@~1.0.14:
   version "1.0.16"
@@ -5214,6 +5236,7 @@ react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 react-native-progress@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.5.0.tgz#d1ccc7f96dc17c609aedb43b2e6695d67deae0ec"
@@ -5223,6 +5246,8 @@ react-native-progress@^3.5.0:
 =======
 =======
 >>>>>>> profile page v1
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 react-native-ratings@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.3.0.tgz#becda9379616776a81d9d90bfc95ea40b76286fb"
@@ -5231,9 +5256,12 @@ react-native-ratings@^6.3.0:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> profile page v1
 =======
 >>>>>>> profile page v1
+=======
+>>>>>>> e1053e9f583a4dce1b7b1a9a13d4f62152105ea3
 
 react-native-reanimated@1.0.0-alpha.11:
   version "1.0.0-alpha.11"

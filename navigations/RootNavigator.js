@@ -16,8 +16,8 @@ const ProfileNav = createStackNavigator({
 })
 const  MainNavigator = createBottomTabNavigator({
   Home: DashboardNav,
-  Measure: BlankPage,
-  Profile: ProfileNav
+  Profile: ProfileNav,
+  Measure: Timbangan,
 }, {
   initialRouteName: 'Profile',
   tabBarOptions: {
