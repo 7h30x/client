@@ -108,7 +108,8 @@ export default class App extends React.Component {
           await AsyncStorage.setItem('timbangan', self.state.timbanganID)
           await firebase.database().ref(`Timbangans/${Timbangan}`).set({
             currentUser: 'resa',
-            value: 0
+            value: 0,
+            height: 0
           })
           await self.setState({
             loading: false,
@@ -181,13 +182,13 @@ export default class App extends React.Component {
                   <Form style={{ width: '100%', }}>
                     <Item>
                       <Icon active name='speedometer' />
-                      <Input value={this.state.timbanganID} onChangeText={this.changeHandler} placeholderTextColor="green" placeholder="Input Timbangan ID Here" />
+                      <Input value={this.state.timbanganID} onChangeText={this.changeHandler} placeholderTextColor="rgb(66, 134, 244)" placeholder="Input Timbangan ID Here" />
                     </Item>
                   </Form>
 
                   <View style={styles.ButtonContainer}>
                     <View>
-                      <Button onPress={this.toggleHistory} rounded success>
+                      <Button onPress={this.toggleHistory} rounded style={styles.btnColor}>
                         <Icon
                           name="time"
                         />
@@ -197,7 +198,7 @@ export default class App extends React.Component {
                       </Button>
                     </View>
                     <View style={{ marginLeft: 5 }}>
-                      <Button onPress={this.toggleCamera} rounded success>
+                      <Button onPress={this.toggleCamera} rounded style={styles.btnColor}>
                         <Icon
                           name="camera"
                         />
@@ -251,6 +252,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(66, 134, 244,0.5)'
   },
   ButtonContainer: {
     alignItems: 'baseline',
@@ -261,12 +263,17 @@ const styles = StyleSheet.create({
   },
   ButtonStyle: {
     width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#0462f9',
+    marginTop: 20
   },
   ButtonText: {
     margin: 5,
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  btnColor: {
+    backgroundColor: 'rgba(66, 134, 244,0.5)'
   }
 });

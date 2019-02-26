@@ -10,8 +10,8 @@ export default class Loading extends Component {
         {
           this.props.timbangan
             ? <Text
-              style={{ color: 'red', fontWeight:'900' }}>
-              Pairing on Timbangan <Text style={{ fontWeight: 'bold', color: 'red' }}>{this.props.timbName}</Text>
+              style={{ color: 'green', fontWeight:'900' }}>
+              Pairing on Timbangan <Text style={{ fontWeight: 'bold', color: 'green' }}>{this.props.timbName}</Text>
             </Text>
             : null
         }
