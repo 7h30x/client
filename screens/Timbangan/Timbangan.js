@@ -1,9 +1,10 @@
 import React from 'react';
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
 import { StyleSheet, Text, View, Image, TouchableHighlight, AsyncStorage } from 'react-native';
-import { Button } from 'native-base'
+import { Button, Toast } from 'native-base'
 
 import Loading from './Loading'
+// import Height from './Height'
 
 import gpt from 'graphql-tag'
 import { Mutation } from 'react-apollo'
@@ -18,13 +19,18 @@ export default class App extends React.Component {
       timbangan: timbangan
     })
     firebase.database().ref(`Timbangans/${timbangan}`).on('value', (snapshot) => {
+      let height = snapshot.val().height / 200
       self.setState({
-        timbanganValue: snapshot.val().value
+        timbanganValue: snapshot.val().value,
+        heightValue: height,
+        actualHeight: snapshot.val().height + ''
       })
     })
   }
   state = {
     timbanganValue: 0,
+    heightValue: 0.1,
+    actualHeight: '',
     loading: false,
     timbangan: '',
     maxPoints: 150
@@ -33,38 +39,50 @@ export default class App extends React.Component {
   onDisconect = async () => {
     await firebase.database().ref(`Timbangans/${this.state.timbangan}`).set({
       currentUser: '',
-      value: 0
+      value: 0,
+      height:0
     })
     await AsyncStorage.removeItem('timbangan')
     this.props.navigation.navigate('InputTimbangan')
   }
 
   saveValue = async (mutation) => {
-    this.setState({
-      loading: true
-    })
-    let timbangan = await AsyncStorage.getItem('timbangan')
-    let user = await AsyncStorage.getItem('user')
-    const getData = gpt`{
-      getData(token: "${user}"){
-        data
-      }
-    }`
-    await mutation({ variables: { token: user, weight: Math.round(this.state.timbanganValue) }, refetchQueries: [{ query: getData }] })
 
-    await firebase.database().ref(`Timbangans/${timbangan}`).set({
-      currentUser: '',
-      value: 0
-    })
-    await AsyncStorage.removeItem('timbangan')
-    this.setState({
-      loading: false
-    })
-    this.props.navigation.navigate('InputTimbangan')
+    if (this.state.timbanganValue == 0) {
+      Toast.show({
+        text: 'Please scale your weigth frist',
+        buttonText: 'Okay!',
+        duration: 4000,
+        type: 'danger',
+        position: 'top'
+      })
+    } else {
+      this.setState({
+        loading: true
+      })
+      let timbangan = await AsyncStorage.getItem('timbangan')
+      let user = await AsyncStorage.getItem('user')
+      const getData = gpt`{
+        getData(token: "${user}"){
+          data
+        }
+      }`
+      await mutation({ variables: { token: user, weight: Math.round(this.state.timbanganValue) }, refetchQueries: [{ query: getData }] })
+
+      await firebase.database().ref(`Timbangans/${timbangan}`).set({
+        currentUser: '',
+        value: 0
+      })
+      await AsyncStorage.removeItem('timbangan')
+      this.setState({
+        loading: false
+      })
+      this.props.navigation.navigate('InputTimbangan')
+    }
   }
 
   render() {
-    const { timbanganValue, maxPoints, loading } = this.state
+    const { timbanganValue, maxPoints, loading, heightValue,actualHeight} = this.state
     const fill = timbanganValue / maxPoints * 100
     return (
       <View style={styles.container}>
@@ -81,12 +99,24 @@ export default class App extends React.Component {
             <View style={styles.TouchContainer}>
               <Text style={{ fontWeight: 'bold', color: 'white' }}>
                 Connected on: {this.state.timbangan}
-                </Text>
+              </Text>
               <Text style={{ fontWeight: 'bold', color: 'white' }}>
                 Tap to disconect
                 </Text>
             </View>
           </TouchableHighlight>
+          <View style={{ width: '100%', alignItems: 'flex-end' }}>
+            <View>
+              <Button
+                style={{ backgroundColor: '#eee', margin: 20 }}
+                rounded
+              >
+                <Text style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
+                  Try Height!
+            </Text>
+              </Button>
+            </View>
+          </View>
         </View>
 
         <View style={styles.ButtonContainer}>
@@ -117,7 +147,7 @@ export default class App extends React.Component {
         </View>
 
         <View style={styles.GraphContainer}>
-
+          {/* <Height actualHeight={actualHeight} heightValue={heightValue} /> */}
           <AnimatedCircularProgress
             size={300}
             width={15}
@@ -136,77 +166,17 @@ export default class App extends React.Component {
             )}
           </AnimatedCircularProgress>
         </View>
-
-        {/* <Image
-          source={require('../../assets/timbangan.png')}
-          style={{
-            zIndex: -10,
-            flex: 1,
-            resizeMode: 'center',
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            justifyContent: 'center'
-          }}
-        />
-
-        <Text style={styles.value}>
-          {timbanganValue}
-        </Text>
-
-
-        <View style={{ flex: 1, height: '100%', width: '100%' }}>
-          <View style={{ flex: 2, heigh: '100%', flexDirection: 'row' }}>
-            <TouchableHighlight
-              onPress={this.onDisconect}
-              style={{ width: '100%' }}
-            >
-              <View style={{ backgroundColor: '#3b91e2', justifyContent: 'center', alignItems: 'center', width: '100%', height: 50 }}>
-                <Text style={{ fontWeight: 'bold', color: 'white' }}>
-                  Connected on: WKWK
-                </Text>
-                <Text>
-                  Tap to disconect
-                </Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-
-          <View style={{ flex: 1, heigh: '100%', justifyContent: 'center', alignItems: 'center' }}>
-
-          </View>
-          <View style={{ flex: 1, height: '100%', width: '100%', alignItems: 'center' }}>
-            <View>
-              <Button style={{ width: 100, justifyContent: 'center', backgroundColor: 'wheat' }} rounded onPress={this.saveValue}>
-                <Text style={{ fontWeight: 'bold' }}>Save</Text>
-              </Button>
-            </View>
-          </View>
-        </View> */}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   alignItems: 'center',
-  //   justifyContent:'center'
-  // },
-  // value: {
-  //   alignItems: 'center',
-  //   color: 'red',
-  //   position: 'absolute',
-  //   top: 210,
-  //   fontWeight: 'bold',
-  //   fontSize: 50
-  // },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+    backgroundColor: 'rgba(66, 134, 244,0.5)'
   },
   points: {
     backgroundColor: 'transparent',
