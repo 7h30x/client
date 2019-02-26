@@ -188,3 +188,68 @@ export default class StatsPage extends Component {
     )
   }
 }
+const styles = {
+  bar: {
+    height: 23,
+    backgroundColor: 'red',
+    marginVertical: 4,
+    // backgroundImage: 'linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1))', 
+    opacity:0.9
+  },
+  main: {
+    backgroundColor: '#f1f1f1',
+    minHeight: '180%',
+    alignItems: 'center'
+  },
+  iconLeft: {
+    paddingHorizontal: 10,
+    marginRight: 10
+  },
+  headerText: {
+    fontSize: 25,
+    color: 'orange',
+    fontWeight: 'bold',
+    top: 20,
+    opacity: 0.9
+  },
+  normalText: {
+    fontSize: 15,
+    color: 'white',
+    opacity: 0.9,
+    fontWeight: 'bold'
+  },
+  row: {
+    backgroundColor: 'grey',
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    borderRadius: 10,
+    top: 30,
+    opacity: 1,
+    paddingVertical: 10,
+    paddingHorizontal:3,
+    marginBottom: 15
+  },
+  segmentedControlIOS: {
+    marginVertical: 11,
+    width: '90%',
+    height: 35,
+    opacity: 0.9
+  },
+  squarebox: {
+    width: '30%',
+    paddingVertical: 10,
+    backgroundColor: 'orange',
+    alignItems: 'center',
+
+    marginHorizontal: 5,
+    opacity: 0.9,
+    borderRadius: 10,
+    border: 'solid 3px white'
+  },
+  squareboxText: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold'
+  }
+}

@@ -31,12 +31,13 @@ const data = [
     { x: new Date(2018, 9, 17), y: 100 },
     { x: new Date(2018, 10, 1), y: 150 },
     { x: new Date(2018, 10, 2), y: 200 },
-    { x: new Date(2018, 10, 5), y: 250 },
+    { x: new Date(2018, 10, 5), y: 150 },
 ];
   
 const scaleX = scaleTime().domain([new Date(2018, 9, 1), new Date(2018, 10, 5)]).range([0, width]);
-const scaleY = scaleLinear().domain([0, 200]).range([height - verticalPadding, verticalPadding]);
-const scaleLabel = scaleQuantile().domain([0, 200]).range([0, 100, 150,200]);
+const scaleY = scaleLinear().domain([0, 250]).range([height - verticalPadding, verticalPadding]);
+const scaleLabel = scaleQuantile().domain([0, 300]).range([0, 0, 100, 150, 200, 150]);
+
 const line = d3.shape.line()
     .x(d => scaleX(d.x))
     .y(d => scaleY(d.y))
@@ -56,8 +57,7 @@ export default class Chart extends Component {
         const { x, y } = properties.getPointAtLength(lineLength - value);
         this.cursor.current.setNativeProps({ top: y - cursorRadius, left: x - cursorRadius });
         const label = scaleLabel(scaleY.invert(y));
-        this.label.current.setNativeProps({ text: `${label} Test` });
-        this.label.current.setNativeProps({ text: `${label} Test` });
+        this.label.current.setNativeProps({ text: `${label} Test`, text2: `Text again`})
     }
 
     componentDidMount() {
@@ -87,7 +87,7 @@ export default class Chart extends Component {
                     <View ref={this.cursor} style={styles.cursor} />
                 </Svg>
                 <Animated.View style={[styles.label, { transform: [{ translateX }] }]}>
-                    <TextInput ref={this.label} />
+                    <TextInput ref={this.label} editable={false} selectTextOnFocus={false}/>
                 </Animated.View>
                 <Animated.ScrollView
                     style={StyleSheet.absoluteFill}
