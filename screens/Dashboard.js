@@ -23,7 +23,7 @@ export default class Dashboard extends Component {
 
   componentWillMount = async() => {
     const userToken = await AsyncStorage.getItem('user');
-    // console.log(userToken,"token di dashboard")
+    console.log(userToken,"token di dashboard")
     this.setState({
       currentToken: userToken
     })
@@ -71,7 +71,7 @@ export default class Dashboard extends Component {
                     </CardItem>
                     <CardItem cardBody bordered>
                       <View style={styles.progress}>
-                        <ProgressWeight/>
+                        <ProgressWeight weights={JSON.parse(data.getData.data)}/>
                       </View>
                     </CardItem>
                   </Card>

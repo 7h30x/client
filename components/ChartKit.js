@@ -11,8 +11,8 @@ export default class ChartKit extends Component {
   constructor () {
     super()
     this.state = {
-      labels: [],
-      data: [],
+      labels: ['1'],
+      data: [10],
       selectedIndex: 0,
       widthGrafik: 900
     }
@@ -22,10 +22,11 @@ export default class ChartKit extends Component {
   componentDidMount = () => {
     this.fetchWeightToAllGraphics()
   }
-  comp
-  // componentDidUpdate = ()  => {
-  //   this.fetchWeightToAllGraphics()
-  // }
+  componentDidUpdate = (prevProps, nextProps) => {
+    if(prevProps.weights.data !== this.props.weights.data){
+      this.fetchWeightToAllGraphics()
+    }
+  }
   
   fetchWeightToAllGraphics = () => {
     const weights = this.props.weights.data

@@ -4,18 +4,16 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 export default class ProgressWeight extends Component {
     state = {
-        points: 65,
+        points: 0,
         target_weight: 200,
         fill : 0
     };
     componentDidMount = () => {
-        const {points, target_weight} = this.state
-        let fill = points / target_weight * 100;
+        const {weights} = this.props
+        const {target_weight} = this.state
+        const current_weight = weights.data[weights.data.length - 1].value
+        let fill = current_weight / target_weight * 100;
         this.refs.circularprogress.animate(fill, 5000);
-        setTimeout(() => {
-            fill = 90 / target_weight * 100
-            this.refs.circularprogress.animate(fill, 2000);
-        }, 7000);
     }
     render() {
         const {points, target_weight, fill} = this.state
