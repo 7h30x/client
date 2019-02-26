@@ -5,18 +5,21 @@ import BlankPage from '../screens/Blank'
 
 import Timbangan from './TimbanganNav'
 
+import StatsPage from '../screens/StatsPage'
 const  DashboardNav= createStackNavigator({
   Dashboard: BlankPage
 }, {
   initialRouteName: 'Dashboard'
 })
-
+const ProfileNav = createStackNavigator({
+  Stats: StatsPage
+})
 const  MainNavigator = createBottomTabNavigator({
   Home: DashboardNav,
+  Profile: ProfileNav,
   Measure: Timbangan,
-  Profile: BlankPage,
 }, {
-  initialRouteName: 'Home',
+  initialRouteName: 'Profile',
   tabBarOptions: {
     activeTintColor: '#2e94b5',
     showLabel: false,
