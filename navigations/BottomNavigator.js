@@ -1,15 +1,15 @@
 import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation'
 import DashboardNav from './DashboardNav'
-import Profile from './ProfileNav'
-import Timbangan from './TimbanganNav'
+import BlankPage from '../screens/BlankPage'
+
 import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector-icons'
 
 
 export default createBottomTabNavigator({
     Home: DashboardNav,
-    Measure: Timbangan,
-    Profile: Profile,
+    Measure: BlankPage,
+    Profile: BlankPage,
   }, {
     initialRouteName: 'Home',
     tabBarOptions: {
