@@ -42,7 +42,7 @@ export default class History extends Component {
                         <Loading/>
                     }
                     <Card>
-                        <CardItem header bordered>
+                        <CardItem header bordered style={{backgroundColor: '#CEE9FF'}}>
                             <Left>
                                 <Text style={{color: '#0f8bc4', fontWeight: 'bold'}}>Weight History</Text>
                             </Left>

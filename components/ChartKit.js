@@ -144,8 +144,8 @@ export default class ChartKit extends Component {
               width={widthGrafik} // from react-native
               height={220}
               chartConfig={{
-                  backgroundGradientFrom: '#e87c3a',
-                  backgroundGradientTo: '#b74d07',
+                  backgroundGradientFrom: '#b2905b',
+                  backgroundGradientTo: '#efd1a2',
                   decimalPlaces: 0, // optional, defaults to 2dp
                   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                   style: {

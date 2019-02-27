@@ -12,6 +12,7 @@ import { Mutation } from 'react-apollo'
 import firebase from '../../firebase/config'
 
 export default class App extends React.Component {
+
   componentDidMount = async () => {
     let self = this
     let timbangan = await AsyncStorage.getItem('timbangan')
@@ -40,7 +41,7 @@ export default class App extends React.Component {
     await firebase.database().ref(`Timbangans/${this.state.timbangan}`).set({
       currentUser: '',
       value: 0,
-      height:0
+      height: 0
     })
     await AsyncStorage.removeItem('timbangan')
     this.props.navigation.navigate('InputTimbangan')
@@ -75,14 +76,15 @@ export default class App extends React.Component {
       })
       await AsyncStorage.removeItem('timbangan')
       this.setState({
-        loading: false
+        loading: false,
+        timbangan: ''
       })
-      this.props.navigation.navigate('InputTimbangan')
+      this.props.navigation.navigate('InputTimbangan', { current: 'gohome' })
     }
   }
 
   render() {
-    const { timbanganValue, maxPoints, loading, heightValue,actualHeight} = this.state
+    const { timbanganValue, maxPoints, loading, heightValue, actualHeight } = this.state
     const fill = timbanganValue / maxPoints * 100
     return (
       <View style={styles.container}>
@@ -111,9 +113,9 @@ export default class App extends React.Component {
                 style={{ backgroundColor: '#eee', margin: 20 }}
                 rounded
               >
-                <Text style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
+                {/* <Text style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
                   Try Height!
-            </Text>
+            </Text> */}
               </Button>
             </View>
           </View>
@@ -176,7 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    backgroundColor: 'rgba(66, 134, 244,0.5)'
+    backgroundColor: '#b5deff'
   },
   points: {
     backgroundColor: 'transparent',

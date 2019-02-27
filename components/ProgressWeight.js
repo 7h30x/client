@@ -9,6 +9,15 @@ export default class ProgressWeight extends Component {
         fill : 0
     };
     componentDidMount = () => {
+        this.fetchCurrentWeight()
+    }
+    componentDidUpdate = (prevProps, nextProps) => {
+        if(prevProps.weights.data !== this.props.weights.data){
+          this.fetchCurrentWeight()
+        }
+    }
+
+    fetchCurrentWeight () {
         const {weights} = this.props
         const {target_weight} = this.state
         const current_weight = weights.data[weights.data.length - 1].value

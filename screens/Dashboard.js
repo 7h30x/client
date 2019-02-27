@@ -11,7 +11,11 @@ import Loading from './Timbangan/Loading';
 
 export default class Dashboard extends Component {
   static navigationOptions = {
-    headerTitle: 'Home'
+    headerTitle: 'Home',
+    headerStyle: {
+      backgroundColor: 'rgb(52,94,127)',
+    },
+    headerTintColor: '#fff',
   }
   constructor () {
     super()
@@ -57,18 +61,18 @@ export default class Dashboard extends Component {
                       <Loading/>
                   }
                   <Card>
-                    <CardItem header bordered>
+                    <CardItem header bordered style={{backgroundColor: '#CEE9FF'}}>
                       <Text style={{color: '#0f8bc4', fontWeight: 'bold'}}> Your Weight Progress</Text>
                     </CardItem>
-                    <CardItem cardBody>
+                    <CardItem cardBody style={{backgroundColor: 'rgba(206,233,255, 0.3)'}}>
                       <ChartKit weights={JSON.parse(data.getData.data)}/>
                     </CardItem>
                   </Card>
                   <Card>
-                    <CardItem header bordered>
+                    <CardItem header bordered style={{backgroundColor: '#CEE9FF'}}>
                       <Text style={{color: '#0f8bc4', fontWeight: 'bold'}}> Your Current Weight</Text>
                     </CardItem>
-                    <CardItem cardBody bordered>
+                    <CardItem cardBody bordered style={{backgroundColor: 'rgba(206,233,255, 0.3)'}}>
                       <View style={styles.progress}>
                         <ProgressWeight weights={JSON.parse(data.getData.data)}/>
                       </View>
@@ -87,7 +91,8 @@ export default class Dashboard extends Component {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
+      backgroundColor: '#a3c8e5'
     },
     grafik: {
       justifyContent: 'flex-end',

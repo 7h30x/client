@@ -13,7 +13,11 @@ import History from './History'
 export default class App extends React.Component {
   componentWillMount = async () => {
     let user = await AsyncStorage.getItem('user')
-    console.log(user)
+    console.log('masuk')
+    let param = this.props.navigation.getParam('current')
+    if(param){
+      this.props.navigation.navigate('Home')
+    }
     this.setState({
       user: user
     })
@@ -181,7 +185,7 @@ export default class App extends React.Component {
 
                   <Form style={{ width: '100%', }}>
                     <Item>
-                      <Icon active name='speedometer' />
+                      <Icon active name='speedometer' style={{color: '#b2905b'}}/>
                       <Input value={this.state.timbanganID} onChangeText={this.changeHandler} placeholderTextColor="rgb(66, 134, 244)" placeholder="Input Timbangan ID Here" />
                     </Item>
                   </Form>
@@ -252,19 +256,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(66, 134, 244,0.5)'
+    backgroundColor: '#b5deff'
   },
   ButtonContainer: {
-    alignItems: 'baseline',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 20,
     marginBottom: 5,
     width: '100%'
   },
   ButtonStyle: {
     width: '100%',
     justifyContent: 'center',
-    backgroundColor: '#0462f9',
+    backgroundColor: '#rgb(52,94,127)',
     marginTop: 20
   },
   ButtonText: {
@@ -274,6 +279,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   btnColor: {
-    backgroundColor: 'rgba(66, 134, 244,0.5)'
+    backgroundColor: '#b2905b'
   }
 });

@@ -1,25 +1,33 @@
 export default  {
   bar: {
     height: 23,
-    backgroundColor: 'red',
+    backgroundColor: 'rgb(45,55,64)',
     marginVertical: 4,
     opacity:0.9
   },
+  annoucementText: {
+    size: 30,
+    color:'white'
+  },
   main: {
-    backgroundColor: 'rgba(181,222,255,0.7)',
-    minHeight: '170%',
+    backgroundColor: 'rgba(181,222,255,0.)',
+    height: '170%',
     alignItems: 'center'
   },
   iconLeft: {
-    paddingHorizontal: 10,
-    marginRight: 10
   },
   headerText: {
     fontSize: 25,
-    color: 'orange',
+    color: 'rgb(45,55,64)',
     fontWeight: 'bold',
     top: 30,
     marginVertical: 10
+  },
+  darkNormalText: {
+    fontSize: 15,
+    color: 'rgb(45,55,64)',
+    opacity: 0.9,
+    fontWeight: 'bold'
   },
   normalText: {
     fontSize: 15,
@@ -32,7 +40,7 @@ export default  {
     fontStyle: 'italic',
   },
   row: {
-    backgroundColor: 'grey',
+    backgroundColor: 'rgba(0,0,0,0.1)',
     width: '85%',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -55,7 +63,6 @@ export default  {
     paddingVertical: 10,
     backgroundColor: 'rgb(45,55,64)',
     alignItems: 'center',
-
     marginHorizontal: 5,
     opacity: 0.9,
     borderRadius: 10,
