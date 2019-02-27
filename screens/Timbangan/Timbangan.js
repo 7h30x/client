@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, AsyncStorage } from 
 import { Button, Toast } from 'native-base'
 
 import Loading from './Loading'
-// import Height from './Height'
+import Height from './Height'
 
 import gpt from 'graphql-tag'
 import { Mutation } from 'react-apollo'
@@ -24,17 +24,24 @@ export default class App extends React.Component {
       self.setState({
         timbanganValue: snapshot.val().value,
         heightValue: height,
-        actualHeight: snapshot.val().height + ''
+        actualHeight: snapshot.val().height
       })
     })
   }
   state = {
     timbanganValue: 0,
     heightValue: 0.1,
-    actualHeight: '',
+    actualHeight: 0,
     loading: false,
     timbangan: '',
-    maxPoints: 150
+    maxPoints: 150,
+    currentView: true
+  }
+
+  toggleScale = () => {
+    this.setState({
+      currentView: !this.state.currentView
+    })
   }
 
   onDisconect = async () => {
@@ -83,9 +90,46 @@ export default class App extends React.Component {
     }
   }
 
+
+  saveValueHeight = async (mutation) => {
+    if (this.state.actualHeight < 1) {
+      Toast.show({
+        text: 'Please scale your height frist',
+        buttonText: 'Okay!',
+        duration: 4000,
+        type: 'danger',
+        position: 'top'
+      })
+    } else {
+      this.setState({
+        loading: true
+      })
+      let timbangan = await AsyncStorage.getItem('timbangan')
+      let user = await AsyncStorage.getItem('user')
+      const getData = gpt`{
+        getData(token: "${user}"){
+          data
+        }
+      }`
+      console.log(this.state.actualHeight)
+      await mutation({ variables: { token: user, height: this.state.actualHeight }, refetchQueries: [{ query: getData }] })
+      await firebase.database().ref(`Timbangans/${timbangan}`).set({
+        currentUser: '',
+        value: 0,
+        height: 0
+      })
+      await AsyncStorage.removeItem('timbangan')
+      this.setState({
+        loading: false,
+        timbangan: ''
+      })
+      this.props.navigation.navigate('InputTimbangan', { current: 'gohome' })
+    }
+  }
   render() {
     const { timbanganValue, maxPoints, loading, heightValue, actualHeight } = this.state
     const fill = timbanganValue / maxPoints * 100
+    const btncontent = this.state.currentView ? "Try Heigth" : "Back to Weight"
     return (
       <View style={styles.container}>
         {
@@ -113,9 +157,11 @@ export default class App extends React.Component {
                 style={{ backgroundColor: '#eee', margin: 20 }}
                 rounded
               >
-                {/* <Text style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
-                  Try Height!
-            </Text> */}
+                <Text onPress={this.toggleScale} style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
+                  {
+                    btncontent
+                  }
+                </Text>
               </Button>
             </View>
           </View>
@@ -123,7 +169,7 @@ export default class App extends React.Component {
 
         <View style={styles.ButtonContainer}>
           <View>
-            <Mutation
+            {this.state.currentView && <Mutation
               mutation={
                 gpt`
               mutation AddData($token:String!, $weight:Int!){
@@ -137,6 +183,7 @@ export default class App extends React.Component {
               {
                 (AddData, { data }) => {
                   return (
+
                     <Button style={styles.ButtonStyle} rounded onPress={() => this.saveValue(AddData)}>
                       <Text style={{ fontWeight: 'bold' }}>Save</Text>
                     </Button>
@@ -145,12 +192,38 @@ export default class App extends React.Component {
               }
 
             </Mutation>
+            }
+            {/* INI ADD HEIGHT */}
+
+            {!this.state.currentView && <Mutation
+              mutation={
+                gpt`
+              mutation editHeight($token:String!, $height:Int!){
+                    editHeight(token:$token, height: $height){
+                      message
+                    }
+              }
+              `
+              }
+            >
+              {
+                (editHeight, { data }) => {
+                  return (
+
+                    <Button style={styles.ButtonStyle} rounded onPress={() => this.saveValueHeight(editHeight)}>
+                      <Text style={{ fontWeight: 'bold' }}>Save Height</Text>
+                    </Button>
+                  )
+                }
+              }
+
+            </Mutation>}
           </View>
         </View>
 
         <View style={styles.GraphContainer}>
-          {/* <Height actualHeight={actualHeight} heightValue={heightValue} /> */}
-          <AnimatedCircularProgress
+          {!this.state.currentView && <Height actualHeight={actualHeight} heightValue={heightValue} />}
+          {this.state.currentView && <AnimatedCircularProgress
             size={300}
             width={15}
             backgroundWidth={5}
@@ -166,7 +239,7 @@ export default class App extends React.Component {
                 {Math.round(maxPoints * fill / 100)}Kg
             </Text>
             )}
-          </AnimatedCircularProgress>
+          </AnimatedCircularProgress>}
         </View>
       </View>
     );
