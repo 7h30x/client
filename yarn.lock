@@ -1894,6 +1894,11 @@ chardet@^0.4.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
   integrity sha1-tUc7M9yXxCTl2Y3IfVXU2KKci/I=
 
+chartkick@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/chartkick/-/chartkick-3.0.2.tgz#8857299595296bdbbcfbe8c028540c58b5e15992"
+  integrity sha512-EJmf7ikPKisW0/naKckCKXq1DW+K5VeCOpqXtWqsCauR+3DhnK/xV1/PEtJovCxH3vPuo/aUU7GwirU6FzBxdw==
+
 chownr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.1.tgz#54726b8b8fff4df053c42187e801fb4412df1494"
@@ -2177,7 +2182,14 @@ d3-format@1:
   resolved "https://registry.yarnpkg.com/d3-format/-/d3-format-1.3.2.tgz#6a96b5e31bcb98122a30863f7d92365c00603562"
   integrity sha512-Z18Dprj96ExragQ0DeGi+SYPQ7pPfRMtUXtsg/ChVIKNBCzjO8XYJvRTC1usblx52lqge56V5ect+frYTQc8WQ==
 
-d3-interpolate@1:
+d3-interpolate-path@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/d3-interpolate-path/-/d3-interpolate-path-2.0.0.tgz#cb0327314fedb14e6ea1789ab7e095a16c2f8ab2"
+  integrity sha1-ywMnMU/tsU5uoXiat+CVoWwvirI=
+  dependencies:
+    d3-interpolate "^1.1.1"
+
+d3-interpolate@1, d3-interpolate@^1.1.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/d3-interpolate/-/d3-interpolate-1.3.2.tgz#417d3ebdeb4bc4efcc8fd4361c55e4040211fd68"
   integrity sha512-NlNKGopqaz9qM1PXh9gBF1KSCVh+jSFErrSlD/4hybwoNX/gt1d8CDbDW+3i+5UOHhjC6s6nMvRxcuoMVNgL2w==
@@ -2188,6 +2200,19 @@ d3-path@1:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.7.tgz#8de7cd693a75ac0b5480d3abaccd94793e58aae8"
   integrity sha512-q0cW1RpvA5c5ma2rch62mX8AYaiLX0+bdaSM2wxSU9tXjU4DNvkx9qiUvjkuWCj3p22UO/hlPivujqMiR9PDzA==
+
+d3-scale@^1.0.6:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-1.0.7.tgz#fa90324b3ea8a776422bd0472afab0b252a0945d"
+  integrity sha512-KvU92czp2/qse5tUfGms6Kjig0AhHOwkzXG0+PqIJB3ke0WUv088AHMZI0OssO9NCkXt4RP8yju9rpH8aGB7Lw==
+  dependencies:
+    d3-array "^1.2.0"
+    d3-collection "1"
+    d3-color "1"
+    d3-format "1"
+    d3-interpolate "1"
+    d3-time "1"
+    d3-time-format "2"
 
 d3-scale@^2.2.2:
   version "2.2.2"
@@ -2201,7 +2226,7 @@ d3-scale@^2.2.2:
     d3-time "1"
     d3-time-format "2"
 
-d3-shape@^1.3.4:
+d3-shape@^1.0.6, d3-shape@^1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/d3-shape/-/d3-shape-1.3.4.tgz#358e76014645321eecc7c364e188f8ae3d2a07d4"
   integrity sha512-izaz4fOpOnY3CD17hkZWNxbaN70sIGagLR/5jb6RS96Y+6VqX+q1BQf1av6QSBRdfULi3Gb8Js4CzG4+KAPjMg==
@@ -4879,6 +4904,11 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
+paths-js@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/paths-js/-/paths-js-0.4.7.tgz#2e1d4e4a5a8e57e15c16bd29051d3f8be237e194"
+  integrity sha512-a6pYqToBgB/V7YUHHviYdRq41IcijUjY9XJ1NKu2COrR5eLhrx+HPZ/VL6vC3vyg3z4T6K00wsVMAqTzSR3ppg==
+
 pegjs@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.10.0.tgz#cf8bafae6eddff4b5a7efb185269eaaf4610ddbd"
@@ -4948,6 +4978,11 @@ plugin-error@^0.1.2:
     arr-diff "^1.0.1"
     arr-union "^2.0.1"
     extend-shallow "^1.1.2"
+
+point-in-polygon@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/point-in-polygon/-/point-in-polygon-1.0.1.tgz#d59b64e8fee41c49458aac82b56718c5957b2af7"
+  integrity sha1-1Ztk6P7kHElFiqyCtWcYxZV7Kvc=
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -5104,6 +5139,13 @@ react-apollo@^2.4.1:
     lodash.isequal "^4.5.0"
     prop-types "^15.6.0"
 
+react-chartkick@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-chartkick/-/react-chartkick-0.3.0.tgz#692461eb808e18e7a2860129247476d55295e677"
+  integrity sha512-ZA0X8XUCPhEN/xbsLR+Xrs3hGpHCBscZZR7uwVCNDQWiEceKkTNY9W2ET8sx1beY2x0ixvNtBoc31InGfFIdQg==
+  dependencies:
+    chartkick "^3.0.0"
+
 react-clone-referenced-element@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.0.tgz#9cdda7f2aeb54fea791f3ab8c6ab96c7a77d0158"
@@ -5143,6 +5185,16 @@ react-native-card-flip@^1.0.4:
   integrity sha512-CbCLrcGxEkHP87Aid7YBZXQiiXin/dH8ve4UI4Xin7/fpmoWaSv2bRsCgcCvRsfYXvkyx1pgdBOBlGqLJy52cA==
   dependencies:
     prop-types "15.5.10"
+
+react-native-chart-kit@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-2.2.1.tgz#3c6d219d8821246c929ffba379d442fc46cb4e43"
+  integrity sha512-m+qGar1XFzP5Q1VwmWQsXtln6BrkuZkg8SPrA1W7iuZloXvdlkBUCXZK1qVurBL52K0ThrBMSev+hhsQyX4vsg==
+  dependencies:
+    babel-plugin-module-resolver "^3.1.1"
+    lodash "^4.17.11"
+    paths-js "^0.4.7"
+    point-in-polygon "^1.0.1"
 
 react-native-circular-progress@^1.1.0:
   version "1.1.0"
@@ -5226,6 +5278,14 @@ react-native-progress@^3.5.0:
   dependencies:
     prop-types "^15.5.8"
 
+react-native-pure-chart@0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/react-native-pure-chart/-/react-native-pure-chart-0.0.24.tgz#6a06d803d6bce0d6cdb94ee426e32cfce95f19a1"
+  integrity sha512-YczRMLyR1PY5u5qpYc4ScrYdbPVAD9GxIdnR8m7zbttwytlHVjn90+buYBnHW3Lm/JXHVzCMjTQkXQ5cskvB+Q==
+  dependencies:
+    lodash "^4.17.4"
+    prop-types "^15.6.0"
+
 react-native-ratings@^6.3.0:
   version "6.3.0"
   resolved "https://registry.yarnpkg.com/react-native-ratings/-/react-native-ratings-6.3.0.tgz#becda9379616776a81d9d90bfc95ea40b76286fb"
@@ -5258,10 +5318,26 @@ react-native-screens@1.0.0-alpha.22, "react-native-screens@^1.0.0 || ^1.0.0-alph
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
+react-native-simple-radio-button@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-simple-radio-button/-/react-native-simple-radio-button-2.7.3.tgz#c7227c0f963d6bbcfa245255d18a5a8b98fde41f"
+  integrity sha512-kiYRarFj7PXzV9fbQwMBiYwS4YnhrR4NZGT68atlFIoNFxZLrt5OMCDqXZqu6R6bUWKLndzPpO/nhXc6/OU1Mg==
+
 react-native-status-bar-height@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.2.0.tgz#3bd51de134660efc5f5ad136ca573c7d5790f7ed"
   integrity sha512-4WJpyZirzeMHyZiyNEy4LnSPOtuLRVy3+28Rhz7ffrjCVcc5RFcC0HVjFnkwfuhcTyXIDtzPG6canJkXzbTtBA==
+
+react-native-svg-charts@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg-charts/-/react-native-svg-charts-5.2.0.tgz#eda090136250d02f9d1d8c971663afaee4ed2f4f"
+  integrity sha512-2cV9/QDqXdq9ve1NbTAKVO9BQrYqC69R5Tlo+LgGAIdl6BEVQbushO20vJkN4+d680KKUemyode0yJ7gNwdZNQ==
+  dependencies:
+    d3-array "^1.2.0"
+    d3-interpolate-path "2.0.0"
+    d3-scale "^1.0.6"
+    d3-shape "^1.0.6"
+    prop-types "^15.6.0"
 
 react-native-svg@8.0.10:
   version "8.0.10"

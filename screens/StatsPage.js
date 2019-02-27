@@ -149,7 +149,7 @@ export default class StatsPage extends Component {
 
             return (
               <ScrollView contentContainerStyle={styles.main}>
-                <AchievementModal visible={this.state.modalVisible} />
+                <AchievementModal visible={false} />
                 <View style={styles.row} >
                   <TouchableHighlight>
                     <Icon
