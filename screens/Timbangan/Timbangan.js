@@ -156,8 +156,9 @@ export default class App extends React.Component {
               <Button
                 style={{ backgroundColor: '#eee', margin: 20 }}
                 rounded
+                onPress={this.toggleScale}
               >
-                <Text onPress={this.toggleScale} style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
+                <Text style={{ margin: 5, color: 'rgb(90,111,127)', fontWeight: 'bold' }}>
                   {
                     btncontent
                   }
