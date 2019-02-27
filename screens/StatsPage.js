@@ -18,6 +18,7 @@ import { Query } from 'react-apollo'
 
 
 
+
 export default class StatsPage extends Component {
   constructor(props) {
     super(props)
@@ -27,7 +28,6 @@ export default class StatsPage extends Component {
     }
     this.barWidth = new Animated.Value(0)
   }
-
   static navigationOptions = {
     title: 'My Profile',
     headerStyle: {
@@ -43,6 +43,7 @@ export default class StatsPage extends Component {
     await AsyncStorage.setItem('user', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0YXJnZXQiOnsid2VpZ2h0Ijo3OSwiZGF0ZSI6IjMtMTItMjAxOSJ9LCJ0aW1iYW5nYW5zIjpbXSwiX2lkIjoiNWM3MTdlNGQwNmVhYzIzNzA0MzhlZjc4IiwibmFtZSI6ImFiZWQiLCJlbWFpbCI6ImFiZWRuZWdvQGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJoZWlnaHQiOjE3NywicGFzc3dvcmQiOiIkMmIkMTIkSnM1R1g2WjVTb0tzem53Vm1zeGs0T0xCSlZHTnRDd3lNRWExeVQucHlpdWxBbGQxTnhYWGEiLCJkYXRhIjpbeyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDgiLCJ2YWx1ZSI6NjEsImNyZWF0ZWRBdCI6IjItNi0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDkiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItNy0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTAiLCJ2YWx1ZSI6NzEsImNyZWF0ZWRBdCI6IjItOC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTEiLCJ2YWx1ZSI6NzcsImNyZWF0ZWRBdCI6IjItOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTIiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMTItMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODUzIiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTEzLTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NCIsInZhbHVlIjo2MSwiY3JlYXRlZEF0IjoiMi0xNC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTUiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItMTUtMjAxOSJ9LHsiX2lkIjoiNWM3NDA2OGUyZmU3YjM2MDBjZDAzODU2IiwidmFsdWUiOjcxLCJjcmVhdGVkQXQiOiIyLTE3LTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NyIsInZhbHVlIjo3NywiY3JlYXRlZEF0IjoiMi0xOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTgiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMjAtMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODU5IiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTI2LTIwMTkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMTk0NjExfQ.6jTVQcV8kjJ43HxZ9CdvghwJ0Ti7b43GfaKGml4cZHY")
     let token = await AsyncStorage.getItem('user')
     this.setState({ token })
+
   }
   componentDidMount() {
     this.animateBar()
@@ -66,6 +67,7 @@ export default class StatsPage extends Component {
         <View style={styles.squarebox}><Text style={styles.squareboxText}>{stats.net} KG</Text><Text style={{ color: 'white' }}>nett</Text></View>
         <View style={styles.squarebox}><Text style={styles.squareboxText}>{stats.loss} KG</Text><Text style={{ color: 'white' }}>loss</Text></View>
         <View style={styles.squarebox}><Text style={styles.squareboxText}>{stats.gain} KG</Text><Text style={{ color: 'white' }}>gain</Text></View>
+
       </>
     )
     function calculateStats(arr) {
@@ -88,6 +90,7 @@ export default class StatsPage extends Component {
         net = 0,
         loss = 0,
         gain = 0
+
       dailyAvgs.reduce((a, b) => {
         let res
         if (counter === 0) {
@@ -116,6 +119,7 @@ export default class StatsPage extends Component {
       <Query
         query={GET_USER_DATA}
       >
+
         {({ loading, error, data }) => {
           console.log('halo')
           // let userObj2 = Object(data.getData).data
@@ -124,6 +128,7 @@ export default class StatsPage extends Component {
           if (loading) return (
             <View>
               <Spinner />
+
             </View>
           )
           if (error) return (<Text>Error</Text>)
@@ -133,6 +138,7 @@ export default class StatsPage extends Component {
               if (weightData.length === 0) return 'no data yet!'
               else {
                 let current = weightData[weightData.length - 1].value
+
                 return current
               }
             }
@@ -150,6 +156,7 @@ export default class StatsPage extends Component {
             return (
               <ScrollView contentContainerStyle={styles.main}>
                 <AchievementModal visible={false} />
+
                 <View style={styles.row} >
                   <TouchableHighlight>
                     <Icon
@@ -165,6 +172,7 @@ export default class StatsPage extends Component {
                   <View>
                     <Text style={styles.normalText}> {user.name} </Text>
                     <Text style={styles.normalText}> {user.gender.toUpperCase()} </Text>
+
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                       <Text style={{ ...styles.normalText, marginRight: 4 }}>BMI </Text>
                       <Animated.View style={{ ...styles.bar, width: this.barWidth, alignItems: 'flex-end', paddingRight: 4 }} >
