@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import CardFlip from 'react-native-card-flip'
-import Toast, { DURATION } from 'react-native-easy-toast'
 
 import styles from './styles'
 import {

@@ -20,7 +20,6 @@ export default class Dashboard extends Component {
       loading: false
     }
   }
-
   componentWillMount = async() => {
     const userToken = await AsyncStorage.getItem('user');
     console.log(userToken,"token di dashboard")
@@ -97,14 +96,14 @@ const styles = StyleSheet.create({
     progress:{
       marginTop: 20,
       flex: 1,
-      flexDirections: 'row',
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center'
     },
     history:{
       flex: 1,
       width: 500,
-      flexDirections: 'row',
+      flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center'
     }
