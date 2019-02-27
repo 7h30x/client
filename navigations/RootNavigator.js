@@ -3,13 +3,23 @@ import {createStackNavigator, createBottomTabNavigator, createAppContainer} from
 import {Ionicons, FontAwesome, MaterialCommunityIcons} from 'react-native-vector-icons'
 import BlankPage from '../screens/Blank'
 import StatsPage from '../screens/StatsPage'
+import AchievementModal from '../components/AchievementModal'
 const  DashboardNav= createStackNavigator({
   Dashboard: BlankPage
 }, {
   initialRouteName: 'Dashboard'
 })
+const ModalNav = createStackNavigator({
+  Achievement: AchievementModal
+}, {
+    mode: 'modal',
+    headerMode: 'none'
+})
 const ProfileNav = createStackNavigator({
-  Stats: StatsPage
+  Stats: StatsPage,
+  Achievement: ModalNav
+}, {
+  initialRouteName: 'Achievement'
 })
 const  MainNavigator = createBottomTabNavigator({
   Home: DashboardNav,

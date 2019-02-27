@@ -62,7 +62,8 @@ class FlippedCard extends Component {
       </View>
     )
   }
-   updateTargetInputs(weight, days) {
+  updateTargetInputs(weight, days) {
+     console.log('kitty------------->',weight, days)
     this.targetInputs.weight = weight
     this.targetInputs.days = days
   }
@@ -85,7 +86,7 @@ class FlippedCard extends Component {
       let timeInWeeks = (targetKG / perWeekKG()).toFixed(1)
       let daysFromToday = Math.ceil(timeInWeeks * 7)
       this.updateTargetInputs(targetTotalKG, daysFromToday)
-      return `Final weight @ ${perWeekKG()}kg per week : \n ${targetTotalKG} KG in ${timeInWeeks} weeks.`
+      return `Final weight @ ${perWeekKG()} kg / week : \n ${targetTotalKG} KG in ${timeInWeeks} weeks.`
     }
    
     const renderSubmitButton= () => {
@@ -96,7 +97,7 @@ class FlippedCard extends Component {
               name='md-checkbox'
               type='ionicon'
               size={40}
-              color='gold'
+              color='navy'
             />
           </>
         )
