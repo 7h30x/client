@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import CardFlip from 'react-native-card-flip'
-import Toast, { DURATION } from 'react-native-easy-toast'
-
 import styles from './styles'
 import {
   Text,
   View,
-  TouchableHighlight,
-  SegmentedControlIOS
+  TouchableOpacity,
+  SegmentedControlIOS,
+  AsyncStorage
 } from 'react-native'
 import { Icon, Slider } from 'react-native-elements'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -21,14 +20,6 @@ const EDIT_TARGETS = gql`
     }
   }
   `
-const GET_USER_DATA = gql`
-  query  {
-    getData(token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1iYW5nYW5zIjpbOV0sIl9pZCI6IjVjNzE3ZTRkMDZlYWMyMzcwNDM4ZWY3OCIsIm5hbWUiOiJhYmVkIiwiZW1haWwiOiJhYmVkbmVnb0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRKczVHWDZaNVNvS3N6bndWbXN4azRPTEJKVkdOdEN3eU1FYTF5VC5weWl1bEFsZDFOeFhYYSIsImRhdGEiOlt7Il9pZCI6IjVjNmY5ODU4ZGUxNGRlMWQ2YzBhYWZiOSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiTW9uIEZlYiAxMSAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5ODY5OGRjOGUwMWU0MWUwN2EyMSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiVHVlIEZlYiAxMiAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5ODc5MDU1YzMxMWVkMTNmMGI1NSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjpudWxsfSx7Il9pZCI6IjVjNmY5OGQwNzFiMjcxMjE4OThjNjFlYiIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiVGh1IEZlYiAxNCAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5OTAzOGM2M2YxMjMzZjZlZDU2ZSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiRnJpIEZlYiAxNSAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5OTMwODYyYjZjMjNjNTg1NWI1MSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiU2F0IEZlYiAxNiAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5OTZhYjI3OTNhMjY4OTM0MDk4ZSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiU3VuIEZlYiAxNyAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YTEzNjlhOTA4MmFiZDAwZTE3YiIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiTW9uIEZlYiAxOCAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YTIwNjlhOTA4MmFiZDAwZTE3YyIsInZhbHVlIjo2OSwiY3JlYXRlZEF0IjoiVHVlIEZlYiAxOSAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YTU5YzNhZDA1MmQ2NTUzY2VhMiIsInZhbHVlIjo2OSwiY3JlYXRlZEF0IjoiV2VkIEZlYiAyMCAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YThlZWIwOTE5MmYwN2MwMTA1OSIsInZhbHVlIjo2OSwiY3JlYXRlZEF0IjoiRnJpIEZlYiAyMiAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMDg5NzI5fQ.TQbTFw3Jzb-FoZnKVuUm_XgyhPbbLwKrI3T_QO7dTO8") {
-      data
-    }
-  }
-`
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1iYW5nYW5zIjpbOV0sIl9pZCI6IjVjNzE3ZTRkMDZlYWMyMzcwNDM4ZWY3OCIsIm5hbWUiOiJhYmVkIiwiZW1haWwiOiJhYmVkbmVnb0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMiRKczVHWDZaNVNvS3N6bndWbXN4azRPTEJKVkdOdEN3eU1FYTF5VC5weWl1bEFsZDFOeFhYYSIsImRhdGEiOlt7Il9pZCI6IjVjNmY5ODU4ZGUxNGRlMWQ2YzBhYWZiOSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiTW9uIEZlYiAxMSAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5ODY5OGRjOGUwMWU0MWUwN2EyMSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiVHVlIEZlYiAxMiAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5ODc5MDU1YzMxMWVkMTNmMGI1NSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjpudWxsfSx7Il9pZCI6IjVjNmY5OGQwNzFiMjcxMjE4OThjNjFlYiIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiVGh1IEZlYiAxNCAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5OTAzOGM2M2YxMjMzZjZlZDU2ZSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiRnJpIEZlYiAxNSAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5OTMwODYyYjZjMjNjNTg1NWI1MSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiU2F0IEZlYiAxNiAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5OTZhYjI3OTNhMjY4OTM0MDk4ZSIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiU3VuIEZlYiAxNyAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YTEzNjlhOTA4MmFiZDAwZTE3YiIsInZhbHVlIjo2MCwiY3JlYXRlZEF0IjoiTW9uIEZlYiAxOCAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YTIwNjlhOTA4MmFiZDAwZTE3YyIsInZhbHVlIjo2OSwiY3JlYXRlZEF0IjoiVHVlIEZlYiAxOSAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YTU5YzNhZDA1MmQ2NTUzY2VhMiIsInZhbHVlIjo2OSwiY3JlYXRlZEF0IjoiV2VkIEZlYiAyMCAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifSx7Il9pZCI6IjVjNmY5YThlZWIwOTE5MmYwN2MwMTA1OSIsInZhbHVlIjo2OSwiY3JlYXRlZEF0IjoiRnJpIEZlYiAyMiAyMDE5IDA2OjQ1OjM0IEdNVCswMDAwIChDb29yZGluYXRlZCBVbml2ZXJzYWwgVGltZSkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMDg5NzI5fQ.TQbTFw3Jzb-FoZnKVuUm_XgyhPbbLwKrI3T_QO7dTO8"
 
 class FlippedCard extends Component {
   constructor(props) {
@@ -50,7 +41,7 @@ class FlippedCard extends Component {
   renderFront(target) {
     return (
       <View style={{ width: '95%', flexDirection: 'row' }}>
-        <TouchableHighlight
+        <TouchableOpacity
           onPress={event => this.card.flip()}
         >
           <Icon
@@ -61,21 +52,21 @@ class FlippedCard extends Component {
             reverse
             raised
           />
-        </TouchableHighlight>
-        <View style={{ ...styles.squarebox, width: '80%', paddingVertical: 5 }}>
+        </TouchableOpacity>
+        <View style={{ ...styles.squarebox, width: '80%', height: 60}}>
+          <View style={{flexDirection:'row'}}>
           <Text style={styles.squareboxText}> {target.weight} KG</Text>
-          <View >
-            <Text style={{ ...styles.captionText, color: 'white', fontSize: 13 }}> {`by ${target.date}`}</Text>
+            <Text style={{ ...styles.captionText, color: 'white', fontSize: 15, top:4 }}> {`by ${target.date}`}</Text>
           </View>
         </View>
       </View>
     )
   }
-  updateTargetInputs(weight, days) {
+   updateTargetInputs(weight, days) {
     this.targetInputs.weight = weight
     this.targetInputs.days = days
   }
-  renderBack(user) {
+  renderBack(user ,token) {
     const renderMessage = () => {
       let currentKG = user.data[user.data.length - 1].value
       let targetKG = Math.floor(this.state.value * 10)
@@ -96,6 +87,7 @@ class FlippedCard extends Component {
       this.updateTargetInputs(targetTotalKG, daysFromToday)
       return `Final weight @ ${perWeekKG()}kg per week : \n ${targetTotalKG} KG in ${timeInWeeks} weeks.`
     }
+   
     const renderSubmitButton= () => {
       if (this.state.submitted === true) {
         return (
@@ -110,19 +102,27 @@ class FlippedCard extends Component {
         )
       } else {
         return (
-          <Text style={{ ...styles.normalText, color: 'rgb(104, 188, 255)', left: 35, backgroundColor:'white', padding:10, borderRadius: 10 }}>Submit</Text>
+          <Text style={{ ...styles.normalText, color: 'rgb(104, 188, 255)', left: 35, backgroundColor:'white', padding:10, borderRadius: 20 }}>Submit</Text>
         )
       }
     }
     return (
       <Mutation mutation={EDIT_TARGETS}>
         {(submitMutation, { loading, error, data }) => {
+          const GET_USER_DATA = gql`
+            query {
+              getData(token:"${this.props.token}") {
+                data
+              }
+            }
+          `
+
           return (
-            <View style={{ ...styles.row, width: '100%', height: 450 }} >
+            <View style={{ ...styles.row, width: '100%', height: 460 }} >
               <Spinner
                 visible={this.state.spinner}
               />
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={event => {
                   this.setState({ submitted: false })
                   this.card.flip()
@@ -136,12 +136,12 @@ class FlippedCard extends Component {
                   reverse
                   raised
                 />
-              </TouchableHighlight>
+              </TouchableOpacity>
               <View style={{ flex: 1, top: 20, height: '30%', alignItems: 'stretch' }}>
                 <Text style={styles.captionText} >
                   how much weight do you want to lose / gain ?
                 </Text>
-                <Text style={{ ...styles.squareboxText, fontSize: 18 }}>
+                <Text style={{ ...styles.squareboxText, fontSize: 18, marginTop: 5, color:'rgb(45,55,64)'  }}>
                   {`${this.state.selectedPolarityIndex === 0 ? '- ' : '+ '} ${Math.floor(this.state.value * 10)} KG`}
                 </Text>
                 <Slider
@@ -155,7 +155,7 @@ class FlippedCard extends Component {
                     style={styles.segmentedControlIOS}
                     values={['Loss', 'Gain']}
                     selectedIndex={this.state.selectedPolarityIndex}
-                    tintColor='white'
+                    tintColor='rgb(104,188,255)'
                     onChange={(event) => {
                       console.log(event.nativeEvent.selectedSegmentIndex)
                       this.setState({ selectedPolarityIndex: event.nativeEvent.selectedSegmentIndex });
@@ -169,7 +169,7 @@ class FlippedCard extends Component {
                   <SegmentedControlIOS
                     style={styles.segmentedControlIOS}
                     values={['Slow', 'Moderate', 'Intensive']}
-                    tintColor='white'
+                    tintColor='rgb(104,188,255)'
                     selectedIndex={this.state.selectedSpeedIndex}
                     onChange={(event) => {
                       this.setState({ selectedSpeedIndex: event.nativeEvent.selectedSegmentIndex });
@@ -182,24 +182,30 @@ class FlippedCard extends Component {
                   </Text>
                 </View>
                 
-                <TouchableHighlight
-                  style={{flexDirection:'row', alignItems:'center', marginTop: 15, padding:5, width:'auto', borderRadius:10}}                  
+                <TouchableOpacity
+                  style={{flexDirection:'row', alignItems:'center', marginTop: 15, padding:5, width:'auto', borderRadius:20}}                  
                   onPress={event => {
-                    let self = this
+                    // console.log(this.targetInputs , token)
                     this.setState({ spinner: true })
-                    submitMutation({ variables: { ...this.targetInputs, token } , refetchQueries:[{query:GET_USER_DATA}]})
+                    submitMutation({ variables: { ...this.targetInputs, token }, refetchQueries: [{ query: GET_USER_DATA }] })
                       .then(res => {
-                        self.setState({submitted: true})
-                        setTimeout(() => this.setState({ spinner: false }), 800)
+                      console.log('result',res)
+                      setTimeout(() => {
+                        this.setState({submitted: true})
+                        this.setState({ spinner: false })
+                      }, 600)
+                    })
+                    .catch(err => {
+                      
+                      console.log('err',err)
+                      setTimeout(() => {
+                        this.setState({ spinner: false }), 800
                       })
-                      .catch(err => {
-                        setTimeout(() => this.setState({ spinner: false }), 800)
-                      })
+                    })
                   }}
                 >
                   {renderSubmitButton()}
-              
-                </TouchableHighlight>
+                </TouchableOpacity>
               </View>
             </View>
           )
@@ -208,10 +214,11 @@ class FlippedCard extends Component {
     )
   }
   render() {
+    
     return (
       <CardFlip style={{ ...styles.row, backgroundColor: 'rgba(181,222,255,0.1)' }} ref={card => this.card = card}>
         {this.renderFront(this.props.user.target)}
-        {this.renderBack(this.props.user)}
+        {this.renderBack(this.props.user , this.props.token )}
       </CardFlip>
     )
   }

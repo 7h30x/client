@@ -34,7 +34,9 @@ class AchievementModal extends Component {
               raised
               onPress= {() => toggleModal()}
             />
-            <Text>CONGRATS YOU THE BEST</Text>
+            <Text>CONGRATULATIONS ABED!!!</Text>
+            <Text>76 KG</Text>
+
           </View>
         </Modal>
 
