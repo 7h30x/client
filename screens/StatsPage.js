@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AchievementModal from '../components/AchievementModal'
 import FlippedCard from '../components/FlippedCard'
 import styles from '../components/styles'
 import {
@@ -10,10 +9,11 @@ import {
   Animated,
   AsyncStorage
 } from 'react-native'
-import { Icon} from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import Spinner from 'react-native-loading-spinner-overlay'
 import gql from 'graphql-tag'
-import { Query} from 'react-apollo'
+import { Query } from 'react-apollo'
+import { Button } from 'native-base'
 
 export default class StatsPage extends Component {
   constructor(props) {
@@ -25,17 +25,7 @@ export default class StatsPage extends Component {
     this.barWidth = new Animated.Value(0)
   }
  
-  static navigationOptions = {
-    title: 'My Profile',
-    headerStyle: {
-      backgroundColor: 'rgb(52,94,127)',
-    },
-    headerBackTitle:null,
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold'
-    }
-  }
+ 
   checkTargetSuccess = () => {
     if (this.state.stats === null) return 
     // this.setState({modalVisible : this.state.stats.success})
@@ -43,6 +33,32 @@ export default class StatsPage extends Component {
   calculateCurrentWeight(weightData) {
     if (weightData.length === 0) return 'no data yet!'
     else return weightData[weightData.length - 1].value
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    console.log(navigation)
+    return {
+      title: 'My Profile',
+      headerStyle: {
+        backgroundColor: 'rgb(52,94,127)',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+      headerRight: (
+
+        <Button transparent
+          style={{ height: '90%', marginTop: 1, marginRight: 5, fontWeight: 'bold' }}
+          onPress={async () => {
+            await AsyncStorage.removeItem('user')
+            navigation.navigate('AuthLoad')
+          }}
+        >
+          <Text style={{ margin: 2, color: "white" }}>log out</Text>
+        </Button>
+      )
+    }
   }
   componentWillMount = async () => {
     console.log('xxxxxxxxxxxxxxxxxxxxx')
@@ -63,16 +79,17 @@ export default class StatsPage extends Component {
     }).start()
   }
   renderStats(dataArray) {
-    if(dataArray.length === 0 ) return(<Text> No data yet! Start weighing!</Text>)
-    let stats = calculateStats (dataArray)
+    if (dataArray.length === 0) return (<Text> No data yet! Start weighing!</Text>)
+    let stats = calculateStats(dataArray)
     return (
       <>
-        <View style={{ ...styles.squarebox, backgroundColor: 'red' }}><Text style={styles.squareboxText}>{stats.loss} KG</Text><Text style={{color: 'white'}}>loss</Text></View>
-        <View style={styles.squarebox}><Text style={styles.squareboxText}>{stats.net} KG</Text><Text style={{color: 'white'}}>net</Text></View>
-        <View style={{ ...styles.squarebox, backgroundColor: 'green' }}><Text style={styles.squareboxText}>{stats.gain} KG</Text><Text style={{color: 'white'}}>gain</Text></View>
+        <View style={{ ...styles.squarebox, backgroundColor: '#91764d' }}><Text style={styles.squareboxText}>{stats.loss} KG</Text><Text style={{ color: 'white' }}>loss</Text></View>
+        <View style={styles.squarebox}><Text style={styles.squareboxText}>{stats.net} KG</Text><Text style={{ color: 'white' }}>net</Text></View>
+        <View style={{ ...styles.squarebox, backgroundColor: '#6d93b2' }}><Text style={styles.squareboxText}>+{stats.gain} KG</Text><Text style={{ color: 'white' }}>gain</Text></View>
       </>
     )
     function calculateStats(arr) {
+
       function calculateDailyAvgs(arr) {
         let resultArr = []
         arr.map(datapoint => {
@@ -109,15 +126,14 @@ export default class StatsPage extends Component {
   }
   render() {
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0YXJnZXQiOnsid2VpZ2h0Ijo3OSwiZGF0ZSI6IjMtMTItMjAxOSJ9LCJ0aW1iYW5nYW5zIjpbXSwiX2lkIjoiNWM3MTdlNGQwNmVhYzIzNzA0MzhlZjc4IiwibmFtZSI6ImFiZWQiLCJlbWFpbCI6ImFiZWRuZWdvQGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJoZWlnaHQiOjE3NywicGFzc3dvcmQiOiIkMmIkMTIkSnM1R1g2WjVTb0tzem53Vm1zeGs0T0xCSlZHTnRDd3lNRWExeVQucHlpdWxBbGQxTnhYWGEiLCJkYXRhIjpbeyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDgiLCJ2YWx1ZSI6NjEsImNyZWF0ZWRBdCI6IjItNi0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDkiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItNy0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTAiLCJ2YWx1ZSI6NzEsImNyZWF0ZWRBdCI6IjItOC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTEiLCJ2YWx1ZSI6NzcsImNyZWF0ZWRBdCI6IjItOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTIiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMTItMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODUzIiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTEzLTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NCIsInZhbHVlIjo2MSwiY3JlYXRlZEF0IjoiMi0xNC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTUiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItMTUtMjAxOSJ9LHsiX2lkIjoiNWM3NDA2OGUyZmU3YjM2MDBjZDAzODU2IiwidmFsdWUiOjcxLCJjcmVhdGVkQXQiOiIyLTE3LTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NyIsInZhbHVlIjo3NywiY3JlYXRlZEF0IjoiMi0xOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTgiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMjAtMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODU5IiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTI2LTIwMTkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMTk0NjExfQ.6jTVQcV8kjJ43HxZ9CdvghwJ0Ti7b43GfaKGml4cZHY"
-    
     const GET_USER_DATA = gql`
-    query {
-      getData(token:"${token}") {
+        query {
+          getData(token:"${token}"){
             data
           }
         }
-        `
-    // const setToken = async ()  => {
+      `
+    // const setToken = ()  => {
     //   console.log('setting token in async...')
     //   let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0YXJnZXQiOnsid2VpZ2h0Ijo3OSwiZGF0ZSI6IjMtMTItMjAxOSJ9LCJ0aW1iYW5nYW5zIjpbXSwiX2lkIjoiNWM3MTdlNGQwNmVhYzIzNzA0MzhlZjc4IiwibmFtZSI6ImFiZWQiLCJlbWFpbCI6ImFiZWRuZWdvQGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJoZWlnaHQiOjE3NywicGFzc3dvcmQiOiIkMmIkMTIkSnM1R1g2WjVTb0tzem53Vm1zeGs0T0xCSlZHTnRDd3lNRWExeVQucHlpdWxBbGQxTnhYWGEiLCJkYXRhIjpbeyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDgiLCJ2YWx1ZSI6NjEsImNyZWF0ZWRBdCI6IjItNi0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDkiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItNy0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTAiLCJ2YWx1ZSI6NzEsImNyZWF0ZWRBdCI6IjItOC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTEiLCJ2YWx1ZSI6NzcsImNyZWF0ZWRBdCI6IjItOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTIiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMTItMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODUzIiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTEzLTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NCIsInZhbHVlIjo2MSwiY3JlYXRlZEF0IjoiMi0xNC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTUiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItMTUtMjAxOSJ9LHsiX2lkIjoiNWM3NDA2OGUyZmU3YjM2MDBjZDAzODU2IiwidmFsdWUiOjcxLCJjcmVhdGVkQXQiOiIyLTE3LTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NyIsInZhbHVlIjo3NywiY3JlYXRlZEF0IjoiMi0xOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTgiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMjAtMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODU5IiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTI2LTIwMTkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMTk0NjExfQ.6jTVQcV8kjJ43HxZ9CdvghwJ0Ti7b43GfaKGml4cZHY"
     //   await AsyncStorage.setItem('user', token)

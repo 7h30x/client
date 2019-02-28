@@ -1,15 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Root } from 'native-base'
 import RootNav from './navigations/RootNavigator'
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost'
-const client = new ApolloClient({ uri: 'https://timol-server.hafrizresa.pro/graphql' })
+const client = require('./graphql/config')
 
 export default class App extends React.Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <RootNav/>
+        <Root>
+          <RootNav />
+        </Root>
       </ApolloProvider>
     );
   }

@@ -5,8 +5,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  SegmentedControlIOS,
-  AsyncStorage
+  SegmentedControlIOS
 } from 'react-native'
 import { Icon, Slider } from 'react-native-elements'
 import Spinner from 'react-native-loading-spinner-overlay'
