@@ -9,7 +9,7 @@ export default class Register extends Component {
         <View style={styles.container}>
 
             <View style={styles.loginContainer}>
-                <Image resizeMode="contain" style={styles.logo} source={{uri: 'https://cdn2.iconfinder.com/data/icons/new-year-resolutions/64/resolutions-01-512.png'}} />
+                <Image resizeMode="contain" style={styles.logo} source={require('../assets/teamtimotlogo.png')} />
             </View>
             <KeyboardAvoidingView behavior="padding" style={styles.formContainer}>
                 <RegisterForm />
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       },
       logo: {
           position: 'absolute',
-          width: 300,
-          height: 100
+          width: 500,
+          height: 200
       }
 });
