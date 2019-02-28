@@ -41,7 +41,7 @@ export default class ChartKit extends Component {
     this.setState({
       data: value,
       labels,
-      widthGrafik: 900
+      widthGrafik: 1100
     })
   }
 
