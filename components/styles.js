@@ -72,5 +72,10 @@ export default  {
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold'
+  },
+  squareboxTextMed: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold'
   }
 }

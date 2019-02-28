@@ -3,9 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Root } from 'native-base'
 import RootNav from './navigations/RootNavigator'
 import { ApolloProvider } from 'react-apollo';
-import ApolloClient from 'apollo-boost'
-const client = require('./graphql/config')
-
+import client from './graphql/config'
 export default class App extends React.Component {
   render() {
     return (

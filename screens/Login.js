@@ -14,7 +14,7 @@ export default class Login extends Component {
     
           if (result.type === 'success') {
             console.log('result', result)
-            // await AsyncStorage.setItem('user', JSON.stringify(result.user))
+            await AsyncStorage.setItem('user', JSON.stringify(result.user))
             this.props.navigation.navigate('Main')
           } else {
             return { cancelled: true };

@@ -7,13 +7,12 @@ export default class AuthLoading extends Component {
     }
 
     componentDidMount = async () => {
-      const userToken = await AsyncStorage.getItem('user');
-      // console.log(userToken, "token nya")
       this.CheckLogin()
     }
   
     CheckLogin = async () => {
       const userToken = await AsyncStorage.getItem('user');
+      console.log(userToken, "token nya")
       this.props.navigation.navigate(userToken ? 'Main' : 'Login');
     };
   

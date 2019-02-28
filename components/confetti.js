@@ -1,3 +1,4 @@
+`
 var retina = window.devicePixelRatio,
 
   // Math shorthands
@@ -392,3 +393,4 @@ document.addEventListener("DOMContentLoaded", function () {
     confetti.resize();
   });
 });
+`

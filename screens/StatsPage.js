@@ -19,17 +19,13 @@ export default class StatsPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      token: "",
       modalVisible: false,
+      fetchingToken: true,
+      currentToken: ''
     }
     this.barWidth = new Animated.Value(0)
   }
  
- 
-  checkTargetSuccess = () => {
-    if (this.state.stats === null) return 
-    // this.setState({modalVisible : this.state.stats.success})
-  }
   calculateCurrentWeight(weightData) {
     if (weightData.length === 0) return 'no data yet!'
     else return weightData[weightData.length - 1].value
@@ -60,16 +56,22 @@ export default class StatsPage extends Component {
       )
     }
   }
-  componentWillMount = async () => {
-    console.log('xxxxxxxxxxxxxxxxxxxxx')
-  }
-  componentDidMount() {
+  componentDidMount = async () => {
     this.animateBar()
-    // this.checkTargetSuccess()
+    console.log('zzzz')
+    const currentToken = await AsyncStorage.getItem('user')
+    //SETTING STATE TRIGGERS RE - RENDER
+    this.setState({
+      // isSuccess: this.checkSuccess(userData),
+      // targetWeight: userData.target.weight,
+      // name: userData.name,
+      fetchingToken: false,
+      currentToken
+    })
+    console.log('yatta! SET STATE!!!!!!!!!!!!!!')
   }
   componentDidUpdate() {
     this.animateBar()
-    // this.checkTargetSuccess()
   }
   animateBar() {
     this.barWidth.setValue(0)
@@ -83,13 +85,12 @@ export default class StatsPage extends Component {
     let stats = calculateStats(dataArray)
     return (
       <>
-        <View style={{ ...styles.squarebox, backgroundColor: '#91764d' }}><Text style={styles.squareboxText}>{stats.loss} KG</Text><Text style={{ color: 'white' }}>loss</Text></View>
-        <View style={styles.squarebox}><Text style={styles.squareboxText}>{stats.net} KG</Text><Text style={{ color: 'white' }}>net</Text></View>
-        <View style={{ ...styles.squarebox, backgroundColor: '#6d93b2' }}><Text style={styles.squareboxText}>+{stats.gain} KG</Text><Text style={{ color: 'white' }}>gain</Text></View>
+        <View style={{ ...styles.squarebox, backgroundColor: '#91764d' }}><Text style={styles.squareboxTextMed}>{stats.loss} KG</Text><Text style={{ color: 'white' }}>loss</Text></View>
+        <View style={styles.squarebox}><Text style={styles.squareboxTextMed}>{stats.net} KG</Text><Text style={{ color: 'white' }}>net</Text></View>
+        <View style={{ ...styles.squarebox, backgroundColor: '#6d93b2' }}><Text style={styles.squareboxTextMed}>+{stats.gain} KG</Text><Text style={{ color: 'white' }}>gain</Text></View>
       </>
     )
     function calculateStats(arr) {
-
       function calculateDailyAvgs(arr) {
         let resultArr = []
         arr.map(datapoint => {
@@ -125,77 +126,80 @@ export default class StatsPage extends Component {
 
   }
   render() {
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0YXJnZXQiOnsid2VpZ2h0Ijo3OSwiZGF0ZSI6IjMtMTItMjAxOSJ9LCJ0aW1iYW5nYW5zIjpbXSwiX2lkIjoiNWM3MTdlNGQwNmVhYzIzNzA0MzhlZjc4IiwibmFtZSI6ImFiZWQiLCJlbWFpbCI6ImFiZWRuZWdvQGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJoZWlnaHQiOjE3NywicGFzc3dvcmQiOiIkMmIkMTIkSnM1R1g2WjVTb0tzem53Vm1zeGs0T0xCSlZHTnRDd3lNRWExeVQucHlpdWxBbGQxTnhYWGEiLCJkYXRhIjpbeyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDgiLCJ2YWx1ZSI6NjEsImNyZWF0ZWRBdCI6IjItNi0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDkiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItNy0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTAiLCJ2YWx1ZSI6NzEsImNyZWF0ZWRBdCI6IjItOC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTEiLCJ2YWx1ZSI6NzcsImNyZWF0ZWRBdCI6IjItOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTIiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMTItMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODUzIiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTEzLTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NCIsInZhbHVlIjo2MSwiY3JlYXRlZEF0IjoiMi0xNC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTUiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItMTUtMjAxOSJ9LHsiX2lkIjoiNWM3NDA2OGUyZmU3YjM2MDBjZDAzODU2IiwidmFsdWUiOjcxLCJjcmVhdGVkQXQiOiIyLTE3LTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NyIsInZhbHVlIjo3NywiY3JlYXRlZEF0IjoiMi0xOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTgiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMjAtMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODU5IiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTI2LTIwMTkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMTk0NjExfQ.6jTVQcV8kjJ43HxZ9CdvghwJ0Ti7b43GfaKGml4cZHY"
+    console.log('rendering.....')
+    if (this.state.fetchingToken === true) return (<Spinner visible={true} />) 
+    // console.log('mytoken---------->',this.state.currentToken)
     const GET_USER_DATA = gql`
         query {
-          getData(token:"${token}"){
+          getData(token:"${this.state.currentToken}"){
             data
           }
         }
       `
-    // const setToken = ()  => {
-    //   console.log('setting token in async...')
-    //   let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0YXJnZXQiOnsid2VpZ2h0Ijo3OSwiZGF0ZSI6IjMtMTItMjAxOSJ9LCJ0aW1iYW5nYW5zIjpbXSwiX2lkIjoiNWM3MTdlNGQwNmVhYzIzNzA0MzhlZjc4IiwibmFtZSI6ImFiZWQiLCJlbWFpbCI6ImFiZWRuZWdvQGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJoZWlnaHQiOjE3NywicGFzc3dvcmQiOiIkMmIkMTIkSnM1R1g2WjVTb0tzem53Vm1zeGs0T0xCSlZHTnRDd3lNRWExeVQucHlpdWxBbGQxTnhYWGEiLCJkYXRhIjpbeyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDgiLCJ2YWx1ZSI6NjEsImNyZWF0ZWRBdCI6IjItNi0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NDkiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItNy0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTAiLCJ2YWx1ZSI6NzEsImNyZWF0ZWRBdCI6IjItOC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTEiLCJ2YWx1ZSI6NzcsImNyZWF0ZWRBdCI6IjItOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTIiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMTItMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODUzIiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTEzLTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NCIsInZhbHVlIjo2MSwiY3JlYXRlZEF0IjoiMi0xNC0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTUiLCJ2YWx1ZSI6NjIsImNyZWF0ZWRBdCI6IjItMTUtMjAxOSJ9LHsiX2lkIjoiNWM3NDA2OGUyZmU3YjM2MDBjZDAzODU2IiwidmFsdWUiOjcxLCJjcmVhdGVkQXQiOiIyLTE3LTIwMTkifSx7Il9pZCI6IjVjNzQwNjhlMmZlN2IzNjAwY2QwMzg1NyIsInZhbHVlIjo3NywiY3JlYXRlZEF0IjoiMi0xOS0yMDE5In0seyJfaWQiOiI1Yzc0MDY4ZTJmZTdiMzYwMGNkMDM4NTgiLCJ2YWx1ZSI6ODEsImNyZWF0ZWRBdCI6IjItMjAtMjAxOSJ9LHsiX2lkIjoiNWM3NGFmNGMyZmU3YjM2MDBjZDAzODU5IiwidmFsdWUiOjgwLCJjcmVhdGVkQXQiOiIyLTI2LTIwMTkifV0sIl9fdiI6MCwiaWF0IjoxNTUxMTk0NjExfQ.6jTVQcV8kjJ43HxZ9CdvghwJ0Ti7b43GfaKGml4cZHY"
-    //   await AsyncStorage.setItem('user', token)
-    //   console.log('set token.')
-    // }
-    // setToken()
+    function checkSuccess(userData) {
+      console.log('--> checking success.....','target:', Math.round(userData.target.weight), 'current',Math.round(userData.data[userData.data.length - 1].value)  )
+      return Math.round(userData.target.weight) === Math.round(userData.data[userData.data.length - 1].value)
+    }
     return (
-        <Query
-          query={GET_USER_DATA}
-        >
-        { ({ loading, error, data }) => {
-          console.log('err',loading)
-          if (loading ===true) return (
-            <View>
-              <Spinner visible={true}/>
-            </View>
-          )
-          if (error !== undefined ) return ( <View></View>)
-          if (data.getData.data) {
-            const user = JSON.parse(data.getData.data)
-            const stats = {
-              height:user.height,
-              currentWeight: this.calculateCurrentWeight(user.data),
-              target: user.target.weight,
-              success: true,
-              bmi: ((this.currentWeight * this.currentWeight) / (this.height * this.height) * 100).toFixed(1)
-            }
-            console.log('----------------------> got NEW DATA', stats)
-              return (
-                <ScrollView contentContainerStyle={styles.main}>
-                  <View style={styles.row} >
-                    <TouchableHighlight style={{marginRight: 30}}>
-                      <Icon
-                        name='accessibility'
-                        type='material'
-                        size={35}
-                        color='rgb(45,55,64)'
-                        reverse
-                        raised
-                        style={styles.iconLeft}
-                      />
-                    </TouchableHighlight>
-                    <View>
-                      <Text style={styles.darkNormalText}> {user.name.toUpperCase() + ' , ' + user.age} </Text>
-                      <Text style={styles.darkNormalText}> { user.gender } </Text>
-                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Text style={{ ...styles.darkNormalText, marginRight: 4 }}>BMI </Text>
-                        <Animated.View style={{ ...styles.bar, width: this.barWidth, alignItems: 'flex-end', paddingRight: 4 }} >
-                          <Text style={styles.normalText}> {stats.bmi} </Text>
-                        </Animated.View>
+        <Query query={GET_USER_DATA}>
+        {
+          ({ loading, error, data }) => {
+            // console.log('loading',loading)
+            if (loading) return (
+              <View>
+                <Spinner visible={true} />
+              </View>
+            )
+            if (error !== undefined) return (<View></View>)
+            if (data.getData.data) {
+              const user = JSON.parse(data.getData.data)
+              let currentWeight = this.calculateCurrentWeight(user.data)
+              const stats = {
+                name: user.name,
+                height: user.height,
+                currentWeight,
+                target: user.target.weight,
+                bmi: (((currentWeight * currentWeight) / (user.height * user.height)) * 100).toFixed(1)
+              }
+              // console.log(stats)
+              if (checkSuccess(user) === true) {
+                this.props.navigation.navigate('Achievement', { stats })
+              }// console.log('----------------------> got NEW DATA YEAY')
+                return (
+                  <ScrollView contentContainerStyle={styles.main}>
+                    <View style={styles.row} >
+                      <TouchableHighlight style={{ marginRight: 30 }}>
+                        <Icon
+                          name='accessibility'
+                          type='material'
+                          size={35}
+                          color='rgb(45,55,64)'
+                          reverse
+                          raised
+                          style={styles.iconLeft}
+                        />
+                      </TouchableHighlight>
+                      <View>
+                        <Text style={styles.darkNormalText}> {user.name.toUpperCase() + ' , ' + user.age} </Text>
+                        <Text style={styles.darkNormalText}> {user.gender} </Text>
+                        <Text style={styles.darkNormalText}> {`Height: ${user.height}`} </Text>
+                        <Text style={styles.darkNormalText}>{`Weight: ${stats.currentWeight} kg`}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                          <Text style={{ ...styles.darkNormalText, marginRight: 4 }}>BMI </Text>
+                          <Animated.View style={{ ...styles.bar, width: this.barWidth, alignItems: 'flex-end', paddingRight: 4, marginVertical: 2 }} >
+                            <Text style={styles.normalText}> {stats.bmi} </Text>
+                          </Animated.View>
+                        </View>
                       </View>
-                      <Text style={styles.darkNormalText}>{`I weigh ${stats.currentWeight} kg`}</Text>
                     </View>
-                  </View>
-                  <Text style={styles.headerText}>My Totals</Text>
-                  <View style={styles.row}>
-                    {this.renderStats(user.data)}
-                  </View>
-                  <Text style={styles.headerText}>My Target Weight</Text>
-                  <FlippedCard user={user} token={token} />
-                </ScrollView>
-              )
+                    <Text style={styles.headerText}>My Weight-Totals</Text>
+                    <View style={styles.row}>
+                      {this.renderStats(user.data)}
+                    </View>
+                    <Text style={styles.headerText}>My Target Weight</Text>
+                    <FlippedCard user={user} token={this.state.currentToken} />
+                  </ScrollView>
+                )
             }
           }
         }

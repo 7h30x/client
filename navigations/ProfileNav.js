@@ -14,6 +14,6 @@ const ProfileNav = createStackNavigator({
   Stats: StatsPage,
   Achievement: ModalNav
 }, {
-    initialRouteName: 'Achievement'
+    initialRouteName: 'Stats'
   })
 export default ProfileNav
