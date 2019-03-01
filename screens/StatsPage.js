@@ -25,7 +25,7 @@ export default class StatsPage extends Component {
     }
     this.barWidth = new Animated.Value(0)
   }
- 
+
   calculateCurrentWeight(weightData) {
     if (weightData.length === 0) return 'no data yet!'
     else return weightData[weightData.length - 1].value
@@ -96,7 +96,7 @@ export default class StatsPage extends Component {
         arr.map(datapoint => {
           let index = resultArr.findIndex(r => r.createdAt === datapoint.createdAt)
           if (index > -1) {
-            resultArr[index].value = ((resultArr[index].value + datapoint.value) / 2).toFixed(1)
+            resultArr[index].value = ((Number(resultArr[index].value) + Number(datapoint.value)) / 2).toFixed(1)
           } else {
             resultArr.push(datapoint)
           }
@@ -121,13 +121,12 @@ export default class StatsPage extends Component {
         counter++
         net += res
       })
-      return { net, loss, gain }
+      return { net: net.toFixed(1), loss: loss.toFixed(1), gain: gain.toFixed(0) }
     }
-
   }
   render() {
     console.log('rendering.....')
-    if (this.state.fetchingToken === true) return (<Spinner visible={true} />) 
+    if (this.state.fetchingToken === true) return (<Spinner visible={true} />)
     // console.log('mytoken---------->',this.state.currentToken)
     const GET_USER_DATA = gql`
         query {
@@ -137,11 +136,11 @@ export default class StatsPage extends Component {
         }
       `
     function checkSuccess(userData) {
-      console.log('--> checking success.....','target:', Math.round(userData.target.weight), 'current',Math.round(userData.data[userData.data.length - 1].value)  )
+      console.log('--> checking success.....', 'target:', Math.round(userData.target.weight), 'current', Math.round(userData.data[userData.data.length - 1].value))
       return Math.round(userData.target.weight) === Math.round(userData.data[userData.data.length - 1].value)
     }
     return (
-        <Query query={GET_USER_DATA}>
+      <Query query={GET_USER_DATA}>
         {
           ({ loading, error, data }) => {
             // console.log('loading',loading)
@@ -165,45 +164,45 @@ export default class StatsPage extends Component {
               if (checkSuccess(user) === true) {
                 this.props.navigation.navigate('Achievement', { stats })
               }// console.log('----------------------> got NEW DATA YEAY')
-                return (
-                  <ScrollView contentContainerStyle={styles.main}>
-                    <View style={styles.row} >
-                      <TouchableHighlight style={{ marginRight: 30 }}>
-                        <Icon
-                          name='accessibility'
-                          type='material'
-                          size={35}
-                          color='rgb(45,55,64)'
-                          reverse
-                          raised
-                          style={styles.iconLeft}
-                        />
-                      </TouchableHighlight>
-                      <View>
-                        <Text style={styles.darkNormalText}> {user.name.toUpperCase() + ' , ' + user.age} </Text>
-                        <Text style={styles.darkNormalText}> {user.gender} </Text>
-                        <Text style={styles.darkNormalText}> {`Height: ${user.height}`} </Text>
-                        <Text style={styles.darkNormalText}>{`Weight: ${stats.currentWeight} kg`}</Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                          <Text style={{ ...styles.darkNormalText, marginRight: 4 }}>BMI </Text>
-                          <Animated.View style={{ ...styles.bar, width: this.barWidth, alignItems: 'flex-end', paddingRight: 4, marginVertical: 2 }} >
-                            <Text style={styles.normalText}> {stats.bmi} </Text>
-                          </Animated.View>
-                        </View>
+              return (
+                <ScrollView contentContainerStyle={styles.main}>
+                  <View style={styles.row} >
+                    <TouchableHighlight style={{ marginRight: 30 }}>
+                      <Icon
+                        name='accessibility'
+                        type='material'
+                        size={35}
+                        color='rgb(45,55,64)'
+                        reverse
+                        raised
+                        style={styles.iconLeft}
+                      />
+                    </TouchableHighlight>
+                    <View>
+                      <Text style={styles.darkNormalText}> {user.name.toUpperCase() + ' , ' + user.age} </Text>
+                      <Text style={styles.darkNormalText}> {user.gender} </Text>
+                      <Text style={styles.darkNormalText}> {`Height: ${user.height}`} </Text>
+                      <Text style={styles.darkNormalText}>{`Weight: ${stats.currentWeight} kg`}</Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ ...styles.darkNormalText, marginRight: 4 }}>BMI </Text>
+                        <Animated.View style={{ ...styles.bar, width: this.barWidth, alignItems: 'flex-end', paddingRight: 4, marginVertical: 2 }} >
+                          <Text style={styles.normalText}> {stats.bmi} </Text>
+                        </Animated.View>
                       </View>
                     </View>
-                    <Text style={styles.headerText}>My Weight-Totals</Text>
-                    <View style={styles.row}>
-                      {this.renderStats(user.data)}
-                    </View>
-                    <Text style={styles.headerText}>My Target Weight</Text>
-                    <FlippedCard user={user} token={this.state.currentToken} />
-                  </ScrollView>
-                )
+                  </View>
+                  <Text style={styles.headerText}>My Weight-Totals</Text>
+                  <View style={styles.row}>
+                    {this.renderStats(user.data)}
+                  </View>
+                  <Text style={styles.headerText}>My Target Weight</Text>
+                  <FlippedCard user={user} token={this.state.currentToken} />
+                </ScrollView>
+              )
             }
           }
         }
-        </Query>
+      </Query>
     )
   }
 }
