@@ -30,7 +30,8 @@ export default class History extends Component {
     }
 
     render() {
-        const {histories, token} = this.props
+        let {histories, token} = this.props
+        histories.data = histories.data.reverse()
         const {loading} = this.state
         
         return (
@@ -63,7 +64,7 @@ export default class History extends Component {
                                 return (
                                     <CardItem bordered>
                                         <Left>
-                                            <Text>{history.createdAt}</Text>
+                                            <Text style={{width: 90}}>{history.createdAt}</Text>
                                             <Text style={{marginLeft: 50}}>{history.value} KG</Text>
                                         </Left>
                                         <Right>
